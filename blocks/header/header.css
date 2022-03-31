@@ -1,2 +1,13 @@
 .header {
+    /* width: calc(100% - 48px*2); */
+    display: block;
+    box-sizing: border-box;
+    min-height: 74px;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+}
+
+@media screen and (max-width: 767px) {
+    .header {
+        min-height: 56px;
+    }
 }
