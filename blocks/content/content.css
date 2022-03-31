@@ -1,2 +1,11 @@
 .content {
+  padding: 40px 0 66px;
+  width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  .content {
+    padding: 42px 0 48px;
+    width: calc(100% - 19px*2);
   }
+}
