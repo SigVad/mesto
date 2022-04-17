@@ -1,3 +1,16 @@
-.popup{
-    
+.popup {
+  font-family: 'Inter', Arial, sans-serif;
+  position: fixed;
+  z-index: 100;
+  color: #000;
+  background: rgba(0, 0, 0, 0.5);
+  /* растянуть на весь экран */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* по-умолчанию спрятать */
+  display: none;
+  justify-content: center;
+  align-items: center;
 }

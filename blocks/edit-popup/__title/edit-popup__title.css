@@ -1,0 +1,16 @@
+.edit-popup__title {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@media screen and (max-width: 559px) {
+  .edit-popup__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

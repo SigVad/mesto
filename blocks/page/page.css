@@ -1,25 +1,22 @@
 .page {
-    width: calc(100% - 200px*2);
-    margin: 0 auto;
-    padding: 45px 0 60px;
-    min-width: 320px;
+    padding: 45px 0 55px;
     max-width: 880px;
+    width: calc(100% - 19px*2);
     box-sizing: border-box;
     background-color: #000;
-    /* color: #FFFFFF;
-    font-style: normal;
-    font-weight: normal;
     font-family: 'Inter', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%; */
+    -moz-text-size-adjust: 100%;
+    margin: 0 auto;
   }
   
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 559px) {
   .page {
     padding: 28px 0 36px;
     width: 100%;
+    min-width: 320px;
   }
 }

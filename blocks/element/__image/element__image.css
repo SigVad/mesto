@@ -1,0 +1,7 @@
+.element__image {
+  box-sizing: border-box;
+  object-fit: cover;
+  min-width: 282px;
+  width: 100%;
+  height: max-content;
+}

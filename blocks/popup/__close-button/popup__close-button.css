@@ -1,0 +1,61 @@
+.popup__close-button {
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: -39px;
+  top: -40px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  height: 34px;
+  width: 34px;
+}
+
+.popup__close-button:before {
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  content: '';
+  height: 37px;
+  border: 2px solid white;
+  background-color: white;
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.popup__close-button:after {
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  content: '';
+  height: 37px;
+  border: 2px solid white;
+  background-color: white;
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.popup__close-button:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 519px) {
+  .popup__close-button {
+    right: -5px;
+
+  }
+  .popup__close-button:before {
+    height: 27px;
+    border: 1px solid white;
+  }
+  .popup__close-button::after {
+    height: 27px;
+    border: 1px solid white;
+  }
+}

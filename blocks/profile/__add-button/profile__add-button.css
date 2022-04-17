@@ -1,0 +1,34 @@
+.profile__add-button {
+  position: relative;
+  cursor: pointer;
+  background: none;
+  width: 150px;
+  height: 50px;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile__add-button:before {
+  position: absolute;
+  content: '';
+  height: 20px;
+  border: 1px solid white;
+  background-color: white;
+}
+.profile__add-button:after {
+  position: relative;
+  content: '';
+  height: 20px;
+  border: 1px solid white;
+  background-color: white;
+  transform: rotate(90deg);
+}
+.profile__add-button:hover {
+  opacity: 0.6;
+}
+@media screen and (max-width: 719px) {
+  .profile__add-button {
+    width: 100%
+  }
+}

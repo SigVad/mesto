@@ -1,0 +1,7 @@
+.element {
+  box-sizing: border-box;
+  height: max-content;
+  border-radius: 5%;
+  background-color: #fff;
+  overflow: hidden;
+}
