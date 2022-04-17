@@ -6,7 +6,7 @@
 
 @media screen and (max-width: 559px) {
   .content {
-    padding: 42px 0 48px;;
+    padding: 42px 0 48px;
     width: calc(100% - 19px*2);
   }
 }
