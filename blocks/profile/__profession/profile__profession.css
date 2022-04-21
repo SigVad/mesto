@@ -1,5 +1,5 @@
 .profile__profession {
-  margin: 0;
+  margin: 0 18px 0 0;
   padding: 0;
   font-family: 'Inter';
   font-style: normal;
@@ -13,6 +13,7 @@
 
 @media screen and (max-width: 559px) {
   .profile__profession {
+    margin: 0;
     font-size: 14px;
     line-height: 17px;
     text-align: center;

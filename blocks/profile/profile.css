@@ -2,5 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: no-wrap;
+}
+
+@media screen and (max-width: 559px) {
+  .profile {
+    flex-direction: column;
+  }
 }

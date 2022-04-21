@@ -1,18 +1,18 @@
 // извлекаем попап-элемент, кнопки редактировать, сохранить, закрыть
 const popupElement = document.querySelector('.popup');
-const editButton = document.querySelector('.profile__edit-button');
-const closeButton = popupElement.querySelector('.page .popup__close-button');
+const closeButton = popupElement.querySelector('.popup__close-button');
 // извлекаем ввод имени, профессии
-const formInput = popupElement.querySelector('.edit-popup__form')
-let profileNameInput = formInput.querySelector('.edit-popup__label_name .edit-popup__input');
-let profileProfessionInput = formInput.querySelector('.edit-popup__label_profession .edit-popup__input');
+const formInput = popupElement.querySelector('.edit-popup__form');
+const profileNameInput = formInput.querySelector('.edit-popup__input_js_name');
+const profileProfessionInput = formInput.querySelector('.edit-popup__input_js_profession');
 // извлекаем имя, профессию
-let profileInfoElement = document.querySelector('.profile__info');
-let profileName = profileInfoElement.querySelector('.profile__name');
-let profileProfession = profileInfoElement.querySelector('.profile__profession');
+const profileElement = document.querySelector('.profile');
+const editButton = profileElement.querySelector('.profile__edit-button');
+const profileName = profileElement.querySelector('.profile__name');
+const profileProfession = profileElement.querySelector('.profile__profession');
 //код клавиши Esc, Enter для наглядности
-const ESC_KEY_CODE = 27;
-const ENTER_KEY_CODE = 13;
+//const ESC_KEY_CODE = 27;
+//const ENTER_KEY_CODE = 13;
 
 //функции открыть и закрыть попап
 function openPopup() {
@@ -22,7 +22,7 @@ function openPopup() {
   profileNameInput.value = profileName.textContent;
   profileProfessionInput.value = profileProfession.textContent;
   //обработчик закрытия на Esc
-  document.addEventListener('keyup', onDocumentKeyUp)
+  //document.addEventListener('keyup', onDocumentKeyUp)
   
 }
 // кнопка сохранения не работает
@@ -35,17 +35,13 @@ function savePopup(evt) {
 
 function closePopup() {
   popupElement.classList.remove('popup_opened');
-  document.removeEventListener('keyup', onDocumentKeyUp)
+  //document.removeEventListener('keyup', onDocumentKeyUp)
 }
-function onDocumentKeyUp(event){
-  if (event.keyCode === ESC_KEY_CODE){
-    closePopup()
-  }
-  if (event.keyCode === ENTER_KEY_CODE){
-    savePopup()
-  }
-}
-//слушатель события нажатия на кнопку выполнит функцию openPopup
+// function onDocumentKeyUp(event){
+//   if (event.keyCode === ESC_KEY_CODE){closePopup()}
+//   if (event.keyCode === ENTER_KEY_CODE){savePopup()}}
+
+//слушатели события нажатий на кнопки
 editButton.addEventListener('click', openPopup);
 formInput.addEventListener('submit', savePopup);
 closeButton.addEventListener('click', closePopup);

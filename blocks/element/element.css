@@ -1,7 +1,6 @@
 .element {
   box-sizing: border-box;
-  height: max-content;
-  border-radius: 5%;
+  border-radius: 10px;
   background-color: #fff;
   overflow: hidden;
 }

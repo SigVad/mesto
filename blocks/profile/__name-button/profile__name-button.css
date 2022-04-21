@@ -2,12 +2,13 @@
   display: flex;
   align-items: baseline;
   justify-content: flex-end;
-  flex-wrap: wrap;
+  flex-wrap: no-wrap;
   gap: 18px;
 }
 
 @media screen and (max-width: 559px) {
   .profile__name-button {
     gap: 10px;
+    justify-content: center;
   }
 }

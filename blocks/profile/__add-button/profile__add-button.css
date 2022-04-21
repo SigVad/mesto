@@ -2,7 +2,7 @@
   position: relative;
   cursor: pointer;
   background: none;
-  width: 150px;
+  min-width: 150px;
   height: 50px;
   border: 2px solid white;
   display: flex;
@@ -27,8 +27,14 @@
 .profile__add-button:hover {
   opacity: 0.6;
 }
-@media screen and (max-width: 719px) {
+@media screen and (max-width: 559px) {
   .profile__add-button {
     width: 100%;
+  }
+  .profile__add-button:before {
+    height: 14px;
+  }
+  .profile__add-button:after {
+    height: 14px;
   }
 }

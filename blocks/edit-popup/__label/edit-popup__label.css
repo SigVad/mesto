@@ -1,6 +1,10 @@
 .edit-popup__label {
+  margin: 0 0 30px;
   box-sizing: border-box;
-  margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.edit-popup__label:last-of-type {
+  margin-bottom: 46px;
 }
