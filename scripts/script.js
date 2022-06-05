@@ -22,29 +22,53 @@ const cardsList = document.querySelector('.elements__list');
 const initialCards = [
   {
     name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
+    alt:  'Зеленые горные склоны.'
   },
   {
     name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
+    alt:  'Зимняя река.'
   },
   {
     name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
+    // alt:  'Одинаковые панельные дома.'
   },
   {
     name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
+    alt:  'Мох и редкие кусты в долине.'
   },
   {
     name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
+    alt:  'Железная дорога через лес.'
   },
   {
     name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  },
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
+    alt:  'Ледяное озеро и скалистый берег.'
+  }
+  // ,{
+  //   name: 'Гора Эльбрус',
+  //   link: './images/element/kirill-pershin-1404681-unsplash.jpg',
+  //   alt:  'Горная долина и Эльбрус на горизонте.'
+  // },
+  // {
+  //   name: 'Домбай',
+  //   link: './images/element/kirill-pershin-1556355-unsplash.jpg',
+  //   alt:  'Скалистая вершина горного хребта.'
+  // },
+  // {
+  //   name: 'Карачаево-Черкесия',
+  //   link: './images/element/kirill-pershin-1088404-unsplash.jpg',
+  //   alt:  'Старинный этнический храм в горах.'
+  // }
 ]; 
+
+// предзагрузка карт
+initialCards.forEach((card) => cardInDOM(card.link, card.name, card.alt));
 
 function addCardInMassive(massive, newCardLink, newCardName) {
   elem={
@@ -54,31 +78,25 @@ function addCardInMassive(massive, newCardLink, newCardName) {
   elem.name = newCardName;
   elem.link = newCardLink;
   massive.push(elem);
-  console.log(massive);
 }
-
 let newCardName = 'Домбай';
 let newCardLink = './images/element/kirill-pershin-1556355-unsplash.jpg';
-// addCardInMassive(initialCards, newCardLink, newCardName);
 
-//функция добавить карту на страницу по шаблону
-function cardInDOM(cardLink, cardName) {
+//функция добавления карты на страницу по шаблону
+function cardInDOM(cardLink, cardName, cardAlt) {
   const cardTemplate = document.querySelector('#cards-template').content;
 
-  console.log(cardTemplate);
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   
-  console.log(cardElement);
+  
   cardElement.querySelector('.element__image').src = cardLink;
   cardElement.querySelector('.element__title').textContent = cardName;
+  if (cardAlt) cardElement.querySelector('.element__image').alt = cardAlt;
+
   cardsList.append(cardElement);
 }
 
-for (let i=0; i < initialCards.length; i++){
-  let cardLink = initialCards[i].link;
-  let cardName = initialCards[i].name;
-  cardInDOM(cardLink, cardName);
-}
+
 
 
 //функции открыть и закрыть попап
@@ -109,6 +127,22 @@ function closePopup() {
 
 //слушатели события нажатий на кнопки
 //addCardButton.addEventListener('click', cardInDOM(newCardLink, newCardName));
+
+// функция лайка карточек
+function likeCard(evt) {
+  evt.target.classList.toggle('element__like_active');
+  }
+
+// функция удаления карточек
+function deleteCard(evt) {
+  evt.target.closest('.card-item').remove();
+}
+
+// функция добавления карточек при загурзке
+initialCards.forEach(function (card) {
+  renderCard(card.name, card.link)
+});
+
 editButton.addEventListener('click', openPopup);
 formInput.addEventListener('submit', savePopup);
 closeButton.addEventListener('click', closePopup);
