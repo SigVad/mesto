@@ -1,12 +1,12 @@
 // извлекаем попап-элемент, кнопки редактировать, сохранить, закрыть
 const popupEdit = document.querySelector('.popup_type_edit');
-const popupCard = document.querySelector('.popup_type_card');
+const popupAddCard = document.querySelector('.popup_type_card');
 const popupImage = document.querySelector('.popup_type_image');
-const closeButton = popupEdit.querySelector('.popup__close-button');
+const closeButton = popupEdit.querySelector('.popup__close-button');//? как с другими то?
 // извлекаем ввод имени, профессии
 const formInput = popupEdit.querySelector('.popup__form');
-const profileNameInput = formInput.querySelector('.popup__input_js_name');
-const profileProfessionInput = formInput.querySelector('.popup__input_js_profession');
+const profileNameInput = formInput.querySelector('.popup__input_name');
+const profileProfessionInput = formInput.querySelector('.popup__input_profession');
 // извлекаем имя, профессию
 const profileElement = document.querySelector('.profile');
 const editButton = profileElement.querySelector('.profile__edit-button');
@@ -79,7 +79,7 @@ let newCardLink = './images/element/kirill-pershin-1556355-unsplash.jpg';
 
 //функция добавления карты на страницу по шаблону
 function cardInDOM(cardLink, cardName) {
-  const cardTemplate = document.querySelector('#cardsTemplat.content;
+  const cardTemplate = cardsTemplate.content;
 
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   
@@ -91,47 +91,69 @@ function cardInDOM(cardLink, cardName) {
 
 
 
-//функции открыть и закрыть попап
-function openPopup() {
+//функции открыть и закрыть попап, принимает элемент
+function openPopup(popup) {
   //добавить класс в список классов элемента popup_opened
-  popupEdit.classList.add('popup_opened');
+  popup.classList.add('popup_opened');
+}
+
+function onPopupEdit (){
+
+  openPopup(popupEdit);
   //присвоить текущие ззачения имени и профессии
   profileNameInput.value = profileName.textContent;
   profileProfessionInput.value = profileProfession.textContent;
   //обработчик закрытия на Esc
   //document.addEventListener('keyup', onDocumentKeyUp)
 }
+
+function onPopupAddCard (){
+  openPopup(popupAddCard);
+
+}
+
+// function addCard(evt)  {
+//   //отменяет действие события по умолчанию.
+//   evt.preventDefault();
+//   cardInDOM(cardLink, cardName)
+//   closePopup();
+// }
+
 // кнопка сохранения
 function savePopup(evt) {
+
   evt.preventDefault();
   profileName.textContent =  profileNameInput.value;
   profileProfession.textContent = profileProfessionInput.value;
-  closePopup();
+  closePopup(evt);
 }
 
-function closePopup() {
-  popupEdit.classList.remove('popup_opened');
-  //document.removeEventListener('keyup', onDocumentKeyUp)
+function closePopup(evt) {
+  //подняться до родителя с классом popup и удалить его класс popup_opened
+  evt.target.closest('.popup').classList.remove('popup_opened');
+  // document.removeEventListener('keyup', onDocumentKeyUp)
 }
 // function onDocumentKeyUp(event){
 //   if (event.keyCode === ESC_KEY_CODE){closePopup()}
 //   if (event.keyCode === ENTER_KEY_CODE){savePopup()}}
 
-//слушатели события нажатий на кнопки
-//addCardButton.addEventListener('click', cardInDOM(newCardLink, newCardName));
+// слушатели события нажатий на кнопки
 
-// функция лайка карточек
+// функция лайка карточек класс добавляет, но не работает
 function likeCard(evt) {
+  console.log(evt.target.classList);
   evt.target.classList.toggle('.element__like-button_active');
-  }
+  console.log(evt.target.classList);
+}
 
 // функция удаления карточек
 function deleteCard(evt) {
   evt.target.closest('.card-item').remove();
 }
 
-likeButton.addEventListener('click', likeCard);
-editButton.addEventListener('click', openPopup);
-addCardButton.addEventListener('click', openPopup);
+// слушатели события нажатий на кнопки
+//document.addEventListener('click', likeCard);
+editButton.addEventListener('click', onPopupEdit);
+addCardButton.addEventListener('click', onPopupAddCard);
 formInput.addEventListener('submit', savePopup);
 closeButton.addEventListener('click', closePopup);
