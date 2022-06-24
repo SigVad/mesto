@@ -1,4 +1,4 @@
-.edit-popup__title {
+.popup__title {
   box-sizing: border-box;
   margin: 0;
   font-family: 'Inter';
@@ -9,7 +9,7 @@
 }
 
 @media screen and (max-width: 559px) {
-  .edit-popup__title {
+  .popup__title {
     font-size: 18px;
     line-height: 22px;
   }

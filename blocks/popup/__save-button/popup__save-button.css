@@ -1,4 +1,4 @@
-.edit-popup__save-button {
+.popup__save-button {
   box-sizing: border-box;
   list-style: none;
   padding: 0;
@@ -17,12 +17,12 @@
   cursor: pointer;
 }
 
-.edit-popup__save-button:hover {
+.popup__save-button:hover {
   opacity: 0.8;
 }
 
 @media screen and (max-width: 519px) {
-  .edit-popup__save-button {
+  .popup__save-button {
     font-size: 14px;
     line-height: 17px;
   }
