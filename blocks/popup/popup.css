@@ -10,7 +10,10 @@
   right: 0;
   bottom: 0;
   /* по-умолчанию спрятать */
-  display: none;
+  display: flex;
+  opacity: 0;
+  transition: visibility 0s .7s, opacity .7s ease;
+  visibility: hidden;
   justify-content: center;
   align-items: center;
 }
