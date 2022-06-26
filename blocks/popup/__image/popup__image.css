@@ -1,0 +1,5 @@
+.popup__image {
+  margin-bottom: 10px;
+  object-fit: contain;
+  max-height: 75vh;
+}
