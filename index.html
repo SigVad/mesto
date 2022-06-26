@@ -46,9 +46,8 @@
     <div class="popup__container">
       <button type="button" class="popup__close-button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-
       <!-- ниже форма отправки данных -->
-      <form class="popup__form" name="form">
+      <form class="popup__form popup__form_profile" name="form-profile">
         <label class="popup__label">
           <input type="text" class="popup__input popup__input_name"  id="input-profile-name"  placeholder="Имя:" name="profile-name" required>
         </label>
@@ -65,9 +64,8 @@
   <div class="popup__container">
     <button type="button" class="popup__close-button"></button>
     <h2 class="popup__title">Новое место</h2>
-
     <!-- ниже форма отправки данных -->
-    <form class="popup__form" name="form">
+    <form class="popup__form popup__form_add-card" name="form-add-card">
       <label class="popup__label">
         <input type="text" class="popup__input popup__input_image-title"  id="input-image-title"  placeholder="Название" name="image-title" required>
       </label>
@@ -81,15 +79,21 @@
 
 <!-- ниже попап Просмотр картинки-->
 <div class="popup popup_type_image">
-  <div class="popup__container">
-  
-  </div>
+  <div class="popup__container popup__container_image">
+    <button type="button" class="popup__close-button"></button>
+    <figure class="popup__image-group">
+      <img class="popup__image" src="" alt="">
+      <figcaption class="popup__image-caption"></figcaption>
+    </figure>
 </div>
 
   <!-- ниже форма подстановки карточек -->
   <template id="cards-template">
     <li class="element">
       <img class="element__image" alt="">
+      <button type="button" class="element__trash-button">
+        <img class="element__trash-button_image" width="18px" height="19px" src="./images/element/__trash-button/trash.svg" alt="">
+      </button>
       <div class="element__content">
          <h2 class="element__title"></h2>
          <button type="button" class="element__like-button"></button>
