@@ -72,7 +72,7 @@ function cardInDOM(cardLink, cardName) {
   cardImage.src = cardLink;
   cardImage.alt = cardName;
   cardElement.querySelector('.element__title').textContent = cardName;
-  cardsList.append(cardElement);
+  cardsList.prepend(cardElement);
   // добавить слушатели нажатия картинки, кнопок Лайк и Корзина
   cardElement.querySelector('.element__trash-button').addEventListener('click', deleteCard);
   cardElement.querySelector('.element__like-button').addEventListener('click', likeCard);
