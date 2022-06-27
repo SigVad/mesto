@@ -90,7 +90,7 @@ function addCard(evt)  {
   const cardName = newCardName.value;
   const cardLink = newCardLink.value;
   cardInDOM(cardLink, cardName)
-  closePopup(evt);
+  closePopup(popupAddCard);
   formAddCard.reset();
  }
 // кнопка сохранения
@@ -99,11 +99,10 @@ function savePopup(evt) {
   evt.preventDefault();
   profileName.textContent =  profileNameInfo.value;
   profileProfession.textContent = profileProfessionInfo.value;
-  closePopup(evt);
+  closePopup(popupProfile);
 }
-function closePopup(evt) {
-  //подняться до родителя с классом popup и удалить его класс popup_opened
-  evt.target.closest('.popup').classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 // function onDocumentKeyUp(event){
 //   if (event.keyCode === ESC_KEY_CODE){closePopup()}
@@ -137,6 +136,6 @@ buttonAddCard.addEventListener('click', function () {openPopup(popupAddCard);});
 formProfile.addEventListener('submit', savePopup);
 formAddCard.addEventListener('submit', addCard);
 // слушатели закрывашки
-buttonClosePopupProfile.addEventListener('click', closePopup);
-buttonClosePopupAddCard.addEventListener('click', closePopup);
-buttonClosePopupImage.addEventListener('click', closePopup);
+buttonClosePopupProfile.addEventListener('click', function () {closePopup(popupProfile);});
+buttonClosePopupAddCard.addEventListener('click', function () {closePopup(popupAddCard);});
+buttonClosePopupImage.addEventListener('click', function () {closePopup(popupImage);});
