@@ -70,12 +70,13 @@ function cardInDOM(cardLink, cardName) {
   const cardElement = cardsTemplate.content.querySelector('.element').cloneNode(true);
   const cardImage = cardElement.querySelector('.element__image');
   cardImage.src = cardLink;
+  cardImage.alt = cardName;
   cardElement.querySelector('.element__title').textContent = cardName;
   cardsList.append(cardElement);
   // добавить слушатели нажатия картинки, кнопок Лайк и Корзина
   cardElement.querySelector('.element__trash-button').addEventListener('click', deleteCard);
   cardElement.querySelector('.element__like-button').addEventListener('click', likeCard);
-  cardImage.addEventListener('click', function () {onPopupImage(cardLink, cardName);});
+  cardImage.addEventListener('click', function () {onPopupImage(cardLink, cardName, cardImage.alt);});
   return cardElement;
 }
 //функция открыть и закрыть попап, принимает элемент
@@ -115,8 +116,9 @@ function onPopupProfile() {
   //обработчик закрытия на Esc
   //document.addEventListener('keyup', onDocumentKeyUp)
   }
-function onPopupImage(image, text) {
+function onPopupImage(image, text, alt) {
   imageSrc.src = image;
+  imageSrc.alt = alt;
   imageCaption.textContent = text;
   openPopup(popupImage);
   }
