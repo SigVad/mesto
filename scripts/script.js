@@ -34,9 +34,6 @@ const buttonAddCard = profileElement.querySelector('.profile__add-button');
 const cardsTemplate = document.querySelector('#cards-template');
 // извлекаем список карточек, чтобы заполнить по шаблону
 const cardsList = document.querySelector('.elements__list');
-//код клавиши Esc, Enter для наглядности
-//const ESC_KEY_CODE = 27;
-//const ENTER_KEY_CODE = 13;
 const initialCards = [
   {
     name: 'Архыз',
@@ -83,6 +80,8 @@ function cardInDOM(cardLink, cardName) {
 function openPopup(popup) {
   //добавить класс в список классов элемента popup_opened
   popup.classList.add('popup_opened');
+  //обработчик закрытия на Esc
+  // document.addEventListener('keyup', onDocumentKeyUp);
 }
 //функция добавить карту и очистить форму
 function addCard(evt)  {
@@ -104,16 +103,17 @@ function savePopup(evt) {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
+//функция для выхода по Esc
 // function onDocumentKeyUp(event){
-//   if (event.keyCode === ESC_KEY_CODE){closePopup()}
-//   if (event.keyCode === ENTER_KEY_CODE){savePopup()}}
+//   let popupActive = document.querySelector('.popup_opened');
+//   if (event.key === 'Escape'){closePopup(popupActive)}
+// }
 function onPopupProfile() {
   openPopup(popupProfile);
   //присвоить текущие ззачения имени и профессии
   profileNameInfo.value = profileName.textContent;
   profileProfessionInfo.value = profileProfession.textContent;
-  //обработчик закрытия на Esc
-  //document.addEventListener('keyup', onDocumentKeyUp)
+  
   }
 function onPopupImage(image, text, altText) {
   imageSrc.src = image;
