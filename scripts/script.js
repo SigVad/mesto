@@ -59,21 +59,23 @@ const initialCards = [
     name: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
-]; 
-// предзагрузка карт по одной
-initialCards.forEach((card) => cardInDOM(card.link, card.name));
+];
+// функция отрисовки карты
+function renderCard(cardLink, cardName){
+  cardsList.prepend(createCard(cardLink, cardName));
+};
 //функция добавления карты на страницу по шаблону
-function cardInDOM(cardLink, cardName) {
+function createCard(cardLink, cardName) {
   const cardElement = cardsTemplate.content.querySelector('.element').cloneNode(true);
   const cardImage = cardElement.querySelector('.element__image');
   cardImage.src = cardLink;
   cardImage.alt = cardName;
   cardElement.querySelector('.element__title').textContent = cardName;
-  cardsList.prepend(cardElement);
   // добавить слушатели нажатия картинки, кнопок Лайк и Корзина
   cardElement.querySelector('.element__trash-button').addEventListener('click', deleteCard);
   cardElement.querySelector('.element__like-button').addEventListener('click', likeCard);
   cardImage.addEventListener('click', function () {onPopupImage(cardLink, cardName, cardImage.alt);});
+  //вернуть карту в рендер
   return cardElement;
 }
 //функция открыть и закрыть попап, принимает элемент
@@ -88,7 +90,7 @@ function addCard(evt)  {
   evt.preventDefault();
   const cardName = newCardName.value;
   const cardLink = newCardLink.value;
-  cardInDOM(cardLink, cardName)
+  renderCard(cardLink, cardName)
   closePopup(popupAddCard);
   formAddCard.reset();
  }
@@ -102,6 +104,7 @@ function savePopup(evt) {
 }
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  // document.removeEventListener('keyup', onDocumentKeyUp);
 }
 //функция для выхода по Esc
 // function onDocumentKeyUp(event){
@@ -129,6 +132,8 @@ function likeCard(evt) {
 function deleteCard(evt) {
   evt.target.closest('.element').remove();
 }
+// предзагрузка карт по одной
+initialCards.forEach((card) => renderCard(card.link, card.name));
 // слушатели открывашки
 buttonProfile.addEventListener('click', onPopupProfile);
 buttonAddCard.addEventListener('click', function () {openPopup(popupAddCard);});
