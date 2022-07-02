@@ -60,6 +60,13 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+// функция закрытия попапа по клику на оверлей
+const clickOverlayToExit = (evt) => {
+  //если клик по элементу с классом попап
+  if (evt.target.classList.contains('popup')){
+    closePopup(evt.target)
+  }
+}
 // функция отрисовки карты (ссылка, название)
 function renderCard(cardLink, cardName){
   cardsList.prepend(createCard(cardLink, cardName));
@@ -78,7 +85,7 @@ function createCard(cardLink, cardName) {
   //вернуть карту в рендер
   return cardElement;
 }
-//функция открыть и закрыть попап (элемент Попап)
+//функция открыть попап (элемент Попап)
 function openPopup(popup) {
   //добавить класс в список классов элемента popup_opened
   popup.classList.add('popup_opened');
@@ -146,3 +153,7 @@ formAddCard.addEventListener('submit', addCard);
 buttonClosePopupProfile.addEventListener('click', function () {closePopup(popupProfile);});
 buttonClosePopupAddCard.addEventListener('click', function () {closePopup(popupAddCard);});
 buttonClosePopupImage.addEventListener('click', function () {closePopup(popupImage);});
+
+popupProfile.addEventListener('click', clickOverlayToExit);
+popupAddCard.addEventListener('click', clickOverlayToExit);
+popupImage.addEventListener('click', clickOverlayToExit);
