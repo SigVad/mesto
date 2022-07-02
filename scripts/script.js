@@ -60,11 +60,11 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-// функция отрисовки карты
+// функция отрисовки карты (ссылка, название)
 function renderCard(cardLink, cardName){
   cardsList.prepend(createCard(cardLink, cardName));
 };
-//функция добавления карты на страницу по шаблону
+//функция добавления карты на страницу по шаблону (ссылка, название)
 function createCard(cardLink, cardName) {
   const cardElement = cardsTemplate.content.querySelector('.element').cloneNode(true);
   const cardImage = cardElement.querySelector('.element__image');
@@ -78,12 +78,12 @@ function createCard(cardLink, cardName) {
   //вернуть карту в рендер
   return cardElement;
 }
-//функция открыть и закрыть попап, принимает элемент
+//функция открыть и закрыть попап (элемент Попап)
 function openPopup(popup) {
   //добавить класс в список классов элемента popup_opened
   popup.classList.add('popup_opened');
   //обработчик закрытия на Esc
-  // document.addEventListener('keyup', onDocumentKeyUp);
+  document.addEventListener('keyup', onDocumentKeyUp);
 }
 //функция добавить карту и очистить форму
 function addCard(evt)  {
@@ -104,13 +104,15 @@ function savePopup(evt) {
 }
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  // document.removeEventListener('keyup', onDocumentKeyUp);
+  document.removeEventListener('keyup', onDocumentKeyUp);
 }
 //функция для выхода по Esc
-// function onDocumentKeyUp(event){
-//   let popupActive = document.querySelector('.popup_opened');
-//   if (event.key === 'Escape'){closePopup(popupActive)}
-// }
+function onDocumentKeyUp(event){
+  if (event.key === 'Escape'){
+    const popupActive = document.querySelector('.popup_opened');
+    closePopup(popupActive)
+  }
+}
 function onPopupProfile() {
   openPopup(popupProfile);
   //присвоить текущие ззачения имени и профессии
