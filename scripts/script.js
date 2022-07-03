@@ -60,13 +60,6 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-// функция закрытия попапа по клику на оверлей
-const clickOverlayToExit = (evt) => {
-  //если клик по элементу с классом попап
-  if (evt.target.classList.contains('popup')){
-    closePopup(evt.target)
-  }
-}
 // функция отрисовки карты (ссылка, название)
 function renderCard(cardLink, cardName){
   cardsList.prepend(createCard(cardLink, cardName));
@@ -109,15 +102,22 @@ function savePopup(evt) {
   profileProfession.textContent = profileProfessionInfo.value;
   closePopup(popupProfile);
 }
+//функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keyup', onDocumentKeyUp);
 }
 //функция для выхода по Esc
-function onDocumentKeyUp(event){
-  if (event.key === 'Escape'){
+const onDocumentKeyUp = (evt) => {
+  if (evt.key === 'Escape'){
     const popupActive = document.querySelector('.popup_opened');
     closePopup(popupActive)
+  }
+}
+// функция закрытия попапа по клику на фон, если клик по элементу с классом попап
+const clickOverlayToExit = (evt) => {
+  if (evt.target.classList.contains('popup')){
+    closePopup(evt.target)
   }
 }
 function onPopupProfile() {
@@ -149,11 +149,11 @@ buttonAddCard.addEventListener('click', function () {openPopup(popupAddCard);});
 // слушатели форм заполнения профиля и добавления карты
 formProfile.addEventListener('submit', savePopup);
 formAddCard.addEventListener('submit', addCard);
-// слушатели закрывашки
+// слушатели закрывашки по кнопке
 buttonClosePopupProfile.addEventListener('click', function () {closePopup(popupProfile);});
 buttonClosePopupAddCard.addEventListener('click', function () {closePopup(popupAddCard);});
 buttonClosePopupImage.addEventListener('click', function () {closePopup(popupImage);});
-
+// слушатели закрывашки по фону
 popupProfile.addEventListener('click', clickOverlayToExit);
 popupAddCard.addEventListener('click', clickOverlayToExit);
 popupImage.addEventListener('click', clickOverlayToExit);
