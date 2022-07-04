@@ -5,7 +5,6 @@ const hideFormError = (formElement, selectorsObject) => {
     hideInputError(formElement, inputElement, selectorsObject)
   });
 }
-
 //Функция показывает элемент ошибки. принимает элемент формы, поле ввода и текст ошибки
 const showInputError = (formElement, inputElement, errorMessage, selectorsObject) => {
   // Находим элемент ошибки
@@ -31,15 +30,14 @@ const checkInputValidate = (formElement, inputElement, selectorsObject) => {
     hideInputError(formElement, inputElement, selectorsObject);
   }
 }
-//проверяет наличие невалидного поля и сигнализирует, можно ли разблокировать кнопку сабмита. 
-// принимает массив полей ввода
+//Функция проверяет наличие невалидного поля и сигнализирует, можно ли разблокировать кнопку сабмита. 
 const hasInvalidInput = (inputList) => {
 	//some перебирает значения valid у списка. Если поле не валидно, колбэк вернёт true и обход прекратится
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 }
-// отрисовка состояния кнопки Отправить (активна, не активна). 
+//Функция отрисовки состояния кнопки Отправить 
 // принимает массив полей ввода и элемент кнопки
 const toggleButtonState = (inputList, buttonElement, selectorsObject) => {
 	// Если есть хотя бы один невалидный инпут, не активна
@@ -52,7 +50,6 @@ const toggleButtonState = (inputList, buttonElement, selectorsObject) => {
   }
 }
 //Функция добавляет полям формы обработчики событий и контролирует состояние кнопки отправки
-// принимает элемент формы и добавит её полям нужные обработчики:
 const setEventListeners = (formElement, selectorsObject) => {
   // Найдём все поля формы и сделаем из них массив
   const inputList = Array.from(formElement.querySelectorAll(selectorsObject.inputSelector));
@@ -69,9 +66,6 @@ const setEventListeners = (formElement, selectorsObject) => {
 }
 //функция проверки валидации
 const enableValidation = (selectorsObject) => {
-  //console.log('запуск проверки валидации');
-  //  массив всех элементов в DOM с классом .form
-  // Array.from создаёт новый массив на основе массивоподобного объекта.
   const formList = Array.from(document.querySelectorAll(selectorsObject.formSelector));
   //Обойти массив, для каждой формы добавить слушатель и обработчик
   formList.forEach((formElement) => {
