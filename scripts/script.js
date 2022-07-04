@@ -1,3 +1,13 @@
+//Список селекторов для валидации
+const objValidationList = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
 // извлекаем попапы
 const popupProfile = document.querySelector('.popup_type_edit');
 const popupAddCard = document.querySelector('.popup_type_card');
@@ -74,7 +84,7 @@ function createCard(cardLink, cardName) {
   // добавить слушатели нажатия картинки, кнопок Лайк и Корзина
   cardElement.querySelector('.element__trash-button').addEventListener('click', deleteCard);
   cardElement.querySelector('.element__like-button').addEventListener('click', likeCard);
-  cardImage.addEventListener('click', function () {onPopupImage(cardLink, cardName, cardImage.alt);});
+  cardImage.addEventListener('click', function () {openPopupImage(cardLink, cardName, cardImage.alt);});
   //вернуть карту в рендер
   return cardElement;
 }
@@ -106,6 +116,7 @@ function savePopup(evt) {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keyup', onDocumentKeyUp);
+  
 }
 //функция для выхода по Esc
 const onDocumentKeyUp = (evt) => {
@@ -120,19 +131,22 @@ const clickOverlayToExit = (evt) => {
     closePopup(evt.target)
   }
 }
-function onPopupProfile() {
+function openPopupProfile() {
   openPopup(popupProfile);
   //присвоить текущие ззачения имени и профессии
   profileNameInfo.value = profileName.textContent;
   profileProfessionInfo.value = profileProfession.textContent;
-  
-  }
-function onPopupImage(image, text, altText) {
+  //убрать возможные ошибки и проверить форму
+  let formElement = popupProfile.querySelector(objValidationList.formSelector);
+  hideFormError(formElement, objValidationList);
+  setEventListeners(formElement, objValidationList);
+}
+function openPopupImage(image, text, altText) {
   imageSrc.src = image;
   imageSrc.alt = altText;
   imageCaption.textContent = text;
   openPopup(popupImage);
-  }
+}
 // функция лайка карточек
 function likeCard(evt) {
   evt.target.classList.toggle('element__like-button_active');
@@ -144,7 +158,7 @@ function deleteCard(evt) {
 // предзагрузка карт по одной
 initialCards.forEach((card) => renderCard(card.link, card.name));
 // слушатели открывашки
-buttonProfile.addEventListener('click', onPopupProfile);
+buttonProfile.addEventListener('click', openPopupProfile);
 buttonAddCard.addEventListener('click', function () {openPopup(popupAddCard);});
 // слушатели форм заполнения профиля и добавления карты
 formProfile.addEventListener('submit', savePopup);
