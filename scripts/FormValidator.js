@@ -1,5 +1,6 @@
 export default class FormValidator {
   constructor(objValidationList, formElement) {
+    // принято на вход
     this._formSelector = objValidationList.formSelector;
     this._inputSelector = objValidationList.inputSelector;
     this._submitButtonSelector = objValidationList.submitButtonSelector;
@@ -7,7 +8,10 @@ export default class FormValidator {
     this._inputErrorClass = objValidationList.inputErrorClass;
     this._errorClass = objValidationList.errorClass;
     this._formElement = formElement;
-    // this._formList = Array.from(document.querySelectorAll(this._formSelector));
+    //_setEventListeners Найдём все поля формы и сделаем из них массив
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    //_setEventListeners Найдём в текущей форме кнопку отправки
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
   }
   // Публичный метод проверки валидации
   enableValidation() {
@@ -19,34 +23,30 @@ export default class FormValidator {
   }
   //метод добавляет полям формы обработчики событий и контролирует состояние кнопки отправки
   _setEventListeners() {
-    // Найдём все поля формы и сделаем из них массив
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    // Найдём в текущей форме кнопку отправки
-    const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-    this._toggleButtonState(inputList, buttonElement);
+    this._toggleButtonState();
     // Обойдём все поля формы, каждому полю добавим слушатель с обработчиком события input 
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidate(inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState();
       });
     });
   }
   //Метод отрисовки кнопки Отправить принимает массив полей ввода и элемент кнопки
-  _toggleButtonState(inputList, buttonElement) {
+  _toggleButtonState() {
     // Если есть хотя бы один невалидный инпут, не активна
-    if(this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.disabled = true;
+    if(this._hasInvalidInput()) {
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this._buttonElement.disabled = true;
     } else {
-      buttonElement.classList.remove(this._inactiveButtonClass);
-      buttonElement.disabled = false;
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.disabled = false;
     }
   }
   // Метод проверяет наличие невалидного поля 
-  _hasInvalidInput(inputList) {
+  _hasInvalidInput() {
     //some перебирает значения valid у списка, пока не встретит невалидное
-    return inputList.some((inputElement) => {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
@@ -76,8 +76,7 @@ export default class FormValidator {
   }
   // Публичный метод принудительно сбрасывает ошибки для формы
   hideFormError() {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement)
     });
   }

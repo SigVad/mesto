@@ -125,7 +125,7 @@ function openPopupAddCard() {
 }
 //функция добавляет валидацию в форму
 function addValidation(popup) {
-  let formElement = popup.querySelector(objValidationList.formSelector);
+  const formElement = popup.querySelector(objValidationList.formSelector);
   const validator = new FormValidator(objValidationList, formElement);
   validator.enableValidation();
   return validator;
@@ -133,8 +133,27 @@ function addValidation(popup) {
 //функция создаст экземпляр класса Card, добавит в DOM
 function addObjCard(link, name) {
   const card = new Card(link, name, '.element');
-  card.renderCard();
+  renderCard(card);
 }
+// функция отрисовки карты (ссылка, название)
+function renderCard(card){
+  cardsList.prepend(card.create);
+};
+//функция добавления карты на страницу по шаблону (ссылка, название)
+// function createCard(cardLink, cardName) {
+//   const cardElement = cardsTemplate.content.querySelector('.element').cloneNode(true);
+//   const cardImage = cardElement.querySelector('.element__image');
+//   cardImage.src = cardLink;
+//   cardImage.alt = cardName;
+//   cardElement.querySelector('.element__title').textContent = cardName;
+//   // добавить слушатели нажатия картинки, кнопок Лайк и Корзина
+//   cardElement.querySelector('.element__trash-button').addEventListener('click', deleteCard);
+//   cardElement.querySelector('.element__like-button').addEventListener('click', likeCard);
+//   cardImage.addEventListener('click', function () {openPopupImage(cardLink, cardName);});
+//   //вернуть карту в рендер
+//   return cardElement;
+// }
+
 
 // предзагрузка карт
 initialCards.forEach((item) => {

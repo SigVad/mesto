@@ -4,13 +4,13 @@ import {openPopup, cardsList, popupImage, imageSrc, imageCaption, cardsTemplate}
 export default class Card {
   constructor(link, name, templateSelector) {
     this._tSelector = templateSelector;
-    this._link = link;
-    this._name = name;
+    this.link = link;
+    this.name = name;
   }
-  // публичная функция отрисовки карты (ссылка, название)
-  renderCard(){
-    cardsList.prepend(this._createCard());
-  }
+  // // публичная функция отрисовки карты (ссылка, название)
+  // renderCard(){
+  //   cardsList.prepend(this._createCard());
+  // }
   // приватный метод делает разметку
   // забираем разметку из HTML и клонируем элемент
   _getTemplate() {
@@ -21,16 +21,16 @@ export default class Card {
     return cardElement;
   }
   //функция добавления карты на страницу по шаблону (ссылка, название)
-  _createCard() {//
+  createCard() {//
     // Запишем разметку в приватное поле _element. 
     // Так у других элементов появится доступ к ней.
     this._element = this._getTemplate();
     // Добавим слушатели
     this._setEventListeners();
-    const cardImage = this._element.querySelector('.element__image');
+    this._cardImage = this._element.querySelector('.element__image')
     // Добавим данные
-    cardImage.src = this._link;
-    cardImage.alt = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
     this._element.querySelector('.element__title').textContent = this._name;
     // Вернём элемент наружу
     return this._element;
@@ -55,7 +55,10 @@ export default class Card {
     this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
   }
   _handleTrashClick() {
+    //убрать разметку
     this._element.remove();
+    //занулить текущий объект
+    this._element = null;
   }
   _handleOpenPopupImage() {
     imageSrc.src = this._link;
