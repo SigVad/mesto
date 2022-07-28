@@ -1,6 +1,5 @@
 import Card from './card.js';
 import FormValidator from './FormValidator.js';
-//enableValidation, toggleButtonState, hideFormError, setEventListeners
 //Список селекторов для валидации
 const objValidationList = {
   formSelector: '.popup__form',
@@ -13,7 +12,6 @@ const objValidationList = {
 // извлекаем попапы
 const popupProfile = document.querySelector('.popup_type_edit');
 const popupAddCard = document.querySelector('.popup_type_card');
-export const popupImage = document.querySelector('.popup_type_image');
 // извлекаем имя, профессию
 const profileElement = document.querySelector('.profile');
 const profileName = profileElement.querySelector('.profile__name');
@@ -27,16 +25,12 @@ const profileProfessionInfo = formProfile.querySelector('.popup__input_professio
 const formAddCard = popupAddCard.querySelector('.popup__form_add-card');
 const newCardName = formAddCard.querySelector('.popup__input_image-title');
 const newCardLink = formAddCard.querySelector('.popup__input_image-link');
-// переменные попап фото
-export const imageSrc = popupImage.querySelector('.popup__image');
-export const imageCaption = popupImage.querySelector('.popup__image-caption');
 // извлекаем кнопки главной страницы
 const buttonProfile = profileElement.querySelector('.profile__edit-button');
 const buttonAddCard = profileElement.querySelector('.profile__add-button');
 // извлекаем шаблон темплейт для карт
-export const cardsTemplate = document.querySelector('#cards-template');
 // извлекаем список карточек, чтобы заполнить по шаблону
-export const cardsList = document.querySelector('.elements__list');
+const cardsList = document.querySelector('.elements__list');
 const initialCards = [
   {
     name: 'Архыз',
@@ -63,9 +57,13 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+//создать массив форм
+const formList = Array.from(document.querySelectorAll(objValidationList.formSelector));
+//создать объект экземпляров класса валидации форм, чтобы обращаться к конкретному экземпляру
+const formListObj = {}; 
 
 //функция открыть попап (элемент Попап)
-export function openPopup(popup) {
+export default function openPopup(popup) {
   //добавить класс в список классов элемента popup_opened
   popup.classList.add('popup_opened');
   //обработчик закрытия на Esc
@@ -115,51 +113,35 @@ function openPopupProfile() {
   //присвоить текущие ззачения имени и профессии
   profileNameInfo.value = profileName.textContent;
   profileProfessionInfo.value = profileProfession.textContent;
-  // принудительно сбросить ошибки для формы
-  addValidation(popupProfile).hideFormError();
+  // принудительно провести валидацию и сбросить ошибки для формы
+  formListObj.formProfile.enableValidation();
+  formListObj.formProfile.hideFormError();
 }
 //Открывает попап добавления карт
 function openPopupAddCard() {
+  formListObj.formAddCard.enableValidation();
   openPopup(popupAddCard);
-  addValidation(popupAddCard);
 }
-//функция добавляет валидацию в форму
-function addValidation(popup) {
-  const formElement = popup.querySelector(objValidationList.formSelector);
-  const validator = new FormValidator(objValidationList, formElement);
-  validator.enableValidation();
-  return validator;
-}
+
 //функция создаст экземпляр класса Card, добавит в DOM
 function addObjCard(link, name) {
   const card = new Card(link, name, '.element');
   renderCard(card);
 }
-// функция отрисовки карты (ссылка, название)
+// публичная функция отрисовки карты (ссылка, название)
 function renderCard(card){
-  cardsList.prepend(card.create);
-};
-//функция добавления карты на страницу по шаблону (ссылка, название)
-// function createCard(cardLink, cardName) {
-//   const cardElement = cardsTemplate.content.querySelector('.element').cloneNode(true);
-//   const cardImage = cardElement.querySelector('.element__image');
-//   cardImage.src = cardLink;
-//   cardImage.alt = cardName;
-//   cardElement.querySelector('.element__title').textContent = cardName;
-//   // добавить слушатели нажатия картинки, кнопок Лайк и Корзина
-//   cardElement.querySelector('.element__trash-button').addEventListener('click', deleteCard);
-//   cardElement.querySelector('.element__like-button').addEventListener('click', likeCard);
-//   cardImage.addEventListener('click', function () {openPopupImage(cardLink, cardName);});
-//   //вернуть карту в рендер
-//   return cardElement;
-// }
-
-
+  cardsList.prepend(card.createCard());
+}
 // предзагрузка карт
 initialCards.forEach((item) => {
   addObjCard(item.link, item.name);
-}); 
+});
 
+//Обойти массив, для каждой формы создать экземпляр валидации
+formList.forEach((formElement) => {
+  const validator = new FormValidator(objValidationList, formElement);
+  formListObj[`${formElement.name}`] = validator;
+});
 // слушатели открывашки
 buttonProfile.addEventListener('click', openPopupProfile);
 buttonAddCard.addEventListener('click', openPopupAddCard);
