@@ -10,7 +10,11 @@
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
-    margin: 0 auto;
+    margin: 0 auto;  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
   }
   
 @media screen and (max-width: 559px) {
