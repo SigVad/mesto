@@ -1,24 +1,28 @@
-
-import openPopup from './index.js';
-
-const cardsTemplate = document.querySelector('#cards-template');
-const popupImage = document.querySelector('.popup_type_image');
-const imageSrc = popupImage.querySelector('.popup__image');
-const imageCaption = popupImage.querySelector('.popup__image-caption');
+import openPopup from '../index.js';
+import {objCardList} from '../utils/constCard.js';
+import {popupImage, imageSrc, imageCaption} from '../utils/constPopupImage.js';
 
 export default class Card {
   constructor(link, name, templateSelector) {
-    this._tSelector = templateSelector;
     this._link = link;
     this._name = name;
+    this._templateSelector = templateSelector;
+    // this._cardClass = objCardList.cardClass;
+    // this._imageClass = objCardList.imageClass;
+    // this._titleClass = objCardList.titleClass;
+    // this._likeButtonClass = objCardList.likeButtonClass;
+    // this._likeButtonActiveClass = objCardList.likeButtonActiveClass;
+    // this._trashButtonClass = objCardList.trashButtonClass;
   }
   // приватный метод делает разметку
   // забираем разметку из HTML и клонируем элемент
   _getTemplate() {
     // найдёт template-элемент с классом card-template, извлечёт его содержимое,
     // в содержимом найдёт элемент с классом card, клонирует его
+
+    const cardsTemplate = document.querySelector(this._templateSelector);
     const cardElement = cardsTemplate.content
-                        .querySelector(this._tSelector).cloneNode(true);
+                        .querySelector(objCardList.cardClass).cloneNode(true);
     // вернём DOM-элемент карточки
     return cardElement;
   }
@@ -29,28 +33,28 @@ export default class Card {
     this._element = this._getTemplate();
     // Добавим слушатели
     this._setEventListeners();
-    this._cardImage = this._element.querySelector('.element__image')
+    this._cardImage = this._element.querySelector(objCardList.imageClass)
     // Добавим данные
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-    this._element.querySelector('.element__title').textContent = this._name;
+    this._element.querySelector(objCardList.titleClass).textContent = this._name;
     // Вернём элемент наружу
     return this._element;
   }
   //метод добавления слушателей
   _setEventListeners() {
-    this._element.querySelector('.element__like-button').addEventListener('click', () => {
+    this._element.querySelector(objCardList.likeButtonClass).addEventListener('click', () => {
       this._handleLikeClick();
     });
-    this._element.querySelector('.element__trash-button').addEventListener('click', () => {
+    this._element.querySelector(objCardList.trashButtonClass).addEventListener('click', () => {
       this._handleTrashClick();
     });
-    this._element.querySelector('.element__image').addEventListener('click', () => {
+    this._element.querySelector(objCardList.imageClass).addEventListener('click', () => {
       this._handleOpenPopupImage();
     });
   }
   _handleLikeClick() {
-    this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
+    this._element.querySelector(objCardList.likeButtonClass).classList.toggle(objCardList.likeButtonActiveClass);
   }
   _handleTrashClick() {
     //убрать разметку
