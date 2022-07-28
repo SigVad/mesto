@@ -109,17 +109,18 @@ const clickToExit = (evt) => {
 }
 //Открывает попап редактирования профиля
 function openPopupProfile() {
-  openPopup(popupProfile);
   //присвоить текущие ззачения имени и профессии
   profileNameInfo.value = profileName.textContent;
   profileProfessionInfo.value = profileProfession.textContent;
-  // принудительно провести валидацию и сбросить ошибки для формы
-  formListObj.formProfile.enableValidation();
+  //проверить валидность
+  formListObj.formProfile.toggleButtonState();
+  // принудительно сбросить ошибки для формы
   formListObj.formProfile.hideFormError();
+  openPopup(popupProfile);
 }
 //Открывает попап добавления карт
 function openPopupAddCard() {
-  formListObj.formAddCard.enableValidation();
+  formListObj.formAddCard.toggleButtonState();
   openPopup(popupAddCard);
 }
 
@@ -137,10 +138,11 @@ initialCards.forEach((item) => {
   addObjCard(item.link, item.name);
 });
 
-//Обойти массив, для каждой формы создать экземпляр валидации
+//Обойти массив, для каждой формы запустить валидацию
 formList.forEach((formElement) => {
   const validator = new FormValidator(objValidationList, formElement);
   formListObj[`${formElement.name}`] = validator;
+  validator.enableValidation();
 });
 // слушатели открывашки
 buttonProfile.addEventListener('click', openPopupProfile);

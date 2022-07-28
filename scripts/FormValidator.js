@@ -23,17 +23,17 @@ export default class FormValidator {
   }
   //метод добавляет полям формы обработчики событий и контролирует состояние кнопки отправки
   _setEventListeners() {
-    this._toggleButtonState();
+    this.toggleButtonState();
     // Обойдём все поля формы, каждому полю добавим слушатель с обработчиком события input 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidate(inputElement);
-        this._toggleButtonState();
+        this.toggleButtonState();
       });
     });
   }
-  //Метод отрисовки кнопки Отправить принимает массив полей ввода и элемент кнопки
-  _toggleButtonState() {
+  //Публичный метод отрисовки кнопки Отправить принимает массив полей ввода и элемент кнопки
+  toggleButtonState() {
     // Если есть хотя бы один невалидный инпут, не активна
     if(this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._inactiveButtonClass);
@@ -54,7 +54,7 @@ export default class FormValidator {
   _checkInputValidate(inputElement) {
     // Если поле не проходит валидацию, покажем ошибку
     if (!inputElement.validity.valid) {
-      this._showInputError(inputElement, inputElement.validationMessage);
+      this._showInputError(inputElement);
     } else {
       this._hideInputError(inputElement);
     }
@@ -67,8 +67,9 @@ export default class FormValidator {
     errorElement.textContent = '';
   }
   // Метод показывает элемент ошибки. принимает элемент формы, поле ввода и текст ошибки
-  _showInputError(inputElement, errorMessage) {
+  _showInputError(inputElement) {
     // Находим элемент ошибки
+    const errorMessage = inputElement.validationMessage;
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.add(this._inputErrorClass);
     errorElement.classList.add(this._errorClass);
