@@ -8,9 +8,9 @@ export default class FormValidator {
     this._inputErrorClass = objValidationList.inputErrorClass;
     this._errorClass = objValidationList.errorClass;
     this._formElement = formElement;
-    //_setEventListeners Найдём все поля формы и сделаем из них массив
+    //Найдём все поля формы и сделаем из них массив
     this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    //_setEventListeners Найдём в текущей форме кнопку отправки
+    //Найдём кнопку отправки
     this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
   }
   // Публичный метод проверки валидации
@@ -81,13 +81,3 @@ export default class FormValidator {
     });
   }
 }
-
-
-
-
-
-
-
-
-
-
