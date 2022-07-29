@@ -7,19 +7,13 @@ export default class Card {
     this._link = link;
     this._name = name;
     this._templateSelector = templateSelector;
-    // this._cardClass = objCardList.cardClass;
-    // this._imageClass = objCardList.imageClass;
-    // this._titleClass = objCardList.titleClass;
-    // this._likeButtonClass = objCardList.likeButtonClass;
-    // this._likeButtonActiveClass = objCardList.likeButtonActiveClass;
-    // this._trashButtonClass = objCardList.trashButtonClass;
+    // this.objCardList = objCardList.cardClass;
   }
   // приватный метод делает разметку
   // забираем разметку из HTML и клонируем элемент
   _getTemplate() {
     // найдёт template-элемент с классом card-template, извлечёт его содержимое,
     // в содержимом найдёт элемент с классом card, клонирует его
-
     const cardsTemplate = document.querySelector(this._templateSelector);
     const cardElement = cardsTemplate.content
                         .querySelector(objCardList.cardClass).cloneNode(true);

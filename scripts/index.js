@@ -1,20 +1,21 @@
+// вгружаем классы
 import Card from './components/Card.js';
 import FormValidator from './components/FormValidator.js';
-
+// вгружаем используемые константы для классов
 import {objCardList, initialCards} from './utils/constCard.js';
 import {objValidationList} from './utils/constFormValidator.js';
-// извлекаем попапы
+// вгружаем попапы
 import {popupProfile, formProfile, profileNameInfo, profileProfessionInfo} from './utils/constPopupProfile.js';
 import {popupAddCard, formAddCard, newCardName, newCardLink} from './utils/constPopupAddCard.js';
-// извлекаем имя, профессию из главной страницы
+// вгружаем имя, профессию из главной страницы
 import {profileName, profileProfession, buttonProfile, buttonAddCard} from './utils/constants.js';
-// извлекаем список карточек, чтобы заполнить по шаблону
+// вгружаем список карточек, чтобы заполнить по шаблону
 const cardsList = document.querySelector('.elements__list');
 //создать массив форм
 const formList = Array.from(document.querySelectorAll(objValidationList.formSelector));
 //создать объект экземпляров класса валидации форм, чтобы обращаться к конкретному экземпляру
 const formListObj = {}; 
-
+//
 //функция открыть попап (элемент Попап)
 export default function openPopup(popup) {
   //добавить класс в список классов элемента popup_opened
@@ -65,7 +66,7 @@ function openPopupProfile() {
   //присвоить текущие ззачения имени и профессии
   profileNameInfo.value = profileName.textContent;
   profileProfessionInfo.value = profileProfession.textContent;
-  //проверить валидность
+  // проверить состояние кнопки
   formListObj.formProfile.toggleButtonState();
   // принудительно сбросить ошибки для формы
   formListObj.formProfile.hideFormError();
