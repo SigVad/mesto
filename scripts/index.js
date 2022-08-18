@@ -1,4 +1,5 @@
 // вгружаем классы
+import Section from "./components/Section.js";
 import Card from './components/Card.js';
 import FormValidator from './components/FormValidator.js';
 // вгружаем используемые константы для классов
@@ -10,7 +11,7 @@ import {popupAddCard, formAddCard, newCardName, newCardLink} from './utils/const
 // вгружаем имя, профессию из главной страницы
 import {profileName, profileProfession, buttonProfile, buttonAddCard} from './utils/constants.js';
 // вгружаем список карточек, чтобы заполнить по шаблону
-const cardsList = document.querySelector('.elements__list');
+const cardsListSelector = '.elements__list';
 //создать массив форм
 const formList = Array.from(document.querySelectorAll(objValidationList.formSelector));
 //создать объект экземпляров класса валидации форм, чтобы обращаться к конкретному экземпляру
@@ -24,15 +25,7 @@ export default function openPopup(popup) {
   document.addEventListener('keyup', onDocumentKeyUp);
   popup.addEventListener('click', clickToExit);
 }
-//функция добавить карту и очистить форму
-function addCard(evt)  {
-  evt.preventDefault();
-  const cardName = newCardName.value;
-  const cardLink = newCardLink.value;
-  addObjCard(cardLink, cardName);
-  formAddCard.reset();
-  closePopup(popupAddCard);
- }
+
 // кнопка сохранения
 function savePopup(evt) {
 // отменить выполнение действия по-умолчанию
@@ -78,19 +71,7 @@ function openPopupAddCard() {
   openPopup(popupAddCard);
 }
 
-//функция создаст экземпляр класса Card, добавит в DOM
-function addObjCard(link, name) {
-  const card = new Card(link, name, objCardList.templateSelector);
-  renderCard(card);
-}
-// публичная функция отрисовки карты (ссылка, название)
-function renderCard(card){
-  cardsList.prepend(card.createCard());
-}
-// предзагрузка карт
-initialCards.forEach((item) => {
-  addObjCard(item.link, item.name);
-});
+
 
 //Обойти массив, для каждой формы запустить валидацию
 formList.forEach((formElement) => {
@@ -98,6 +79,55 @@ formList.forEach((formElement) => {
   formListObj[`${formElement.name}`] = validator;
   validator.enableValidation();
 });
+
+
+
+// //функция создаст экземпляр класса Card, добавит в DOM
+// function addObjCard(item) {
+//   const card = new Card(item, objCardList.templateSelector);
+//   renderCard(card);
+// }
+// // публичная функция отрисовки карты (ссылка, название)
+// function renderCard(card){
+//   cardsList.prepend(card.createCard());
+// }
+// // предзагрузка карт
+// initialCards.forEach((item) => {
+//   addObjCard(item);
+// });
+
+//функция добавить карту и очистить форму
+function addCard(evt)  {
+  evt.preventDefault();
+  const item = {
+    name: newCardName.value,
+    link: newCardLink.value
+  };
+  // addObjCard(item);
+  const card = new Card(item, objCardList.templateSelector);
+  const cardElement = card.createCard();
+  cardsList.addItem(cardElement);
+
+  formAddCard.reset();
+  closePopup(popupAddCard);
+ }
+//Section вставит в разметку список карточек 
+const cardsList = new Section({
+  data: initialCards, //предзагрузка карт
+  //Создание экземпляров карточек и их вставку в разметку передаем в конструктор класса Section, как функцию-колбэк
+  renderer: (item) => { //значение item передается внутри класса при вызове
+    const card = new Card(item, objCardList.templateSelector);
+    const cardElement = card.createCard();
+    cardsList.addItem(cardElement);
+    },
+  }, cardsListSelector);
+  
+  console.log(cardsList);
+  cardsList.renderItems(); // отрисовка карточек
+
+
+
+
 // слушатели открывашки
 buttonProfile.addEventListener('click', openPopupProfile);
 buttonAddCard.addEventListener('click', openPopupAddCard);

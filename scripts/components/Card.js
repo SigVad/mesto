@@ -1,9 +1,10 @@
+
 import openPopup from '../index.js';
 import {objCardList} from '../utils/constCard.js';
 import {popupImage, imageSrc, imageCaption} from '../utils/constPopupImage.js';
 
 export default class Card {
-  constructor(link, name, templateSelector) {
+  constructor({ link, name }, templateSelector) {
     this._link = link;
     this._name = name;
     this._templateSelector = templateSelector;
