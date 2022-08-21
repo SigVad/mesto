@@ -1,14 +1,13 @@
-//import openPopup from '../index.js';
-import PopupWithImage from "../components/PopupWithImage.js";
-import {objCardList} from '../utils/constCard.js';
-import {popupImage, imageSrc, imageCaption} from '../utils/constPopupImage.js';
+import {objCardList} from '../utils/constants.js';
 
 export default class Card {
-  constructor({ link, name }, templateSelector) {
+  constructor({ link, name }, { popupWithImage,
+    handleCardClick }, templateSelector) {
     this._link = link;
     this._name = name;
+    this._popupWithImage = popupWithImage;
+    this._handleCardClick = handleCardClick;
     this._templateSelector = templateSelector;
-    // this.objCardList = objCardList.cardClass;
   }
   // приватный метод делает разметку
   // забираем разметку из HTML и клонируем элемент
@@ -33,36 +32,25 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._element.querySelector(objCardList.titleClass).textContent = this._name;
-    // Добавим экземпляр класса открытия картинки
-    const objWithImage = { link: this._link, name: this._name};
-    this._popupWithImage = new PopupWithImage(objWithImage, '.popup_type_image');
     // Вернём элемент наружу
     return this._element;
   }
   //метод добавления слушателей
   _setEventListeners() {
-    this._element.querySelector(objCardList.likeButtonClass).addEventListener('click', () => {
-      this._handleLikeClick();
-    });
-    this._element.querySelector(objCardList.trashButtonClass).addEventListener('click', () => {
-      this._handleTrashClick();
-    });
-    this._element.querySelector(objCardList.imageClass).addEventListener('click', () => {
-      this._handleOpenPopupImage();
-    });
+    this._element.querySelector(objCardList.likeButtonClass).addEventListener('click', this._handleLikeClick.bind(this));
+    this._element.querySelector(objCardList.trashButtonClass).addEventListener('click', this._handleTrashClick.bind(this));
+
+    this._element.querySelector(objCardList.imageClass).addEventListener('click', this._handleCardClick.bind(this));
   }
   _handleLikeClick() {
-    this._element.querySelector(objCardList.likeButtonClass).classList.toggle(objCardList.likeButtonActiveClass);
+    this._element.querySelector(objCardList.likeButtonClass)
+      .classList
+      .toggle(objCardList.likeButtonActiveClass);
   }
   _handleTrashClick() {
     //убрать разметку
     this._element.remove();
     //занулить текущий объект
-    this._element = null;
-    // this._popupWithImage = null; 
+    this._element = null; 
   }
-  _handleOpenPopupImage() {
-    this._popupWithImage.open();
-  }
-
 }
