@@ -1,5 +1,5 @@
-
-import openPopup from '../index.js';
+//import openPopup from '../index.js';
+import PopupWithImage from "../components/PopupWithImage.js";
 import {objCardList} from '../utils/constCard.js';
 import {popupImage, imageSrc, imageCaption} from '../utils/constPopupImage.js';
 
@@ -33,6 +33,9 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._element.querySelector(objCardList.titleClass).textContent = this._name;
+    // Добавим экземпляр класса открытия картинки
+    const objWithImage = { link: this._link, name: this._name};
+    this._popupWithImage = new PopupWithImage(objWithImage, '.popup_type_image');
     // Вернём элемент наружу
     return this._element;
   }
@@ -56,11 +59,10 @@ export default class Card {
     this._element.remove();
     //занулить текущий объект
     this._element = null;
+    // this._popupWithImage = null; 
   }
   _handleOpenPopupImage() {
-    imageSrc.src = this._link;
-    imageSrc.alt = this._name;
-    imageCaption.textContent = this._name;
-    openPopup(popupImage);
+    this._popupWithImage.open();
   }
+
 }

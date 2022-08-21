@@ -2,6 +2,7 @@
 import Section from "./components/Section.js";
 import Card from './components/Card.js';
 import FormValidator from './components/FormValidator.js';
+// import PopupWithForm from "./components/PopupWithForm.js";
 // вгружаем используемые константы для классов
 import {objCardList, initialCards} from './utils/constCard.js';
 import {objValidationList} from './utils/constFormValidator.js';
@@ -17,61 +18,6 @@ const formList = Array.from(document.querySelectorAll(objValidationList.formSele
 //создать объект экземпляров класса валидации форм, чтобы обращаться к конкретному экземпляру
 const formListObj = {}; 
 //
-//функция открыть попап (элемент Попап)
-export default function openPopup(popup) {
-  //добавить класс в список классов элемента popup_opened
-  popup.classList.add('popup_opened');
-  //обработчик закрытия на Esc
-  document.addEventListener('keyup', onDocumentKeyUp);
-  popup.addEventListener('click', clickToExit);
-}
-
-// кнопка сохранения
-function savePopup(evt) {
-// отменить выполнение действия по-умолчанию
-  evt.preventDefault();
-  profileName.textContent =  profileNameInfo.value;
-  profileProfession.textContent = profileProfessionInfo.value;
-  closePopup(popupProfile);
-}
-//функция закрытия попапа
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keyup', onDocumentKeyUp);
-  popup.removeEventListener('click', clickToExit);
-}
-//функция для выхода по Esc
-const onDocumentKeyUp = (evt) => {
-  if (evt.key === 'Escape'){
-    const popupActive = document.querySelector('.popup_opened');
-    closePopup(popupActive)
-  }
-}
-// функция закрытия попапа по клику на фон, если клик по элементу с классом попап
-const clickToExit = (evt) => {
-  if ((evt.target.classList.contains('popup'))||(evt.target.classList.contains('popup__close-button'))) {
-    const popupActive = document.querySelector('.popup_opened');
-    closePopup(popupActive);
-  }
-}
-//Открывает попап редактирования профиля
-function openPopupProfile() {
-  //присвоить текущие ззачения имени и профессии
-  profileNameInfo.value = profileName.textContent;
-  profileProfessionInfo.value = profileProfession.textContent;
-  // проверить состояние кнопки
-  formListObj.formProfile.toggleButtonState();
-  // принудительно сбросить ошибки для формы
-  formListObj.formProfile.hideFormError();
-  openPopup(popupProfile);
-}
-//Открывает попап добавления карт
-function openPopupAddCard() {
-  formListObj.formAddCard.toggleButtonState();
-  openPopup(popupAddCard);
-}
-
-
 
 //Обойти массив, для каждой формы запустить валидацию
 formList.forEach((formElement) => {
@@ -80,37 +26,6 @@ formList.forEach((formElement) => {
   validator.enableValidation();
 });
 
-
-
-// //функция создаст экземпляр класса Card, добавит в DOM
-// function addObjCard(item) {
-//   const card = new Card(item, objCardList.templateSelector);
-//   renderCard(card);
-// }
-// // публичная функция отрисовки карты (ссылка, название)
-// function renderCard(card){
-//   cardsList.prepend(card.createCard());
-// }
-// // предзагрузка карт
-// initialCards.forEach((item) => {
-//   addObjCard(item);
-// });
-
-//функция добавить карту и очистить форму
-function addCard(evt)  {
-  evt.preventDefault();
-  const item = {
-    name: newCardName.value,
-    link: newCardLink.value
-  };
-  // addObjCard(item);
-  const card = new Card(item, objCardList.templateSelector);
-  const cardElement = card.createCard();
-  cardsList.addItem(cardElement);
-
-  formAddCard.reset();
-  closePopup(popupAddCard);
- }
 //Section вставит в разметку список карточек 
 const cardsList = new Section({
   data: initialCards, //предзагрузка карт
@@ -122,9 +37,74 @@ const cardsList = new Section({
     },
   }, cardsListSelector);
   
-  console.log(cardsList);
-  cardsList.renderItems(); // отрисовка карточек
+cardsList.renderItems(); // отрисовка карточек
 
+
+
+
+// const popupProfile = new PopupWithForm(
+//   {
+//     handleSubmitForm: (evt) => {
+//       evt.preventDefault();
+//       const user = popupProfile.getInputValues();
+//     },
+//   },
+//   profilePopup
+// );
+
+// кнопка сохранения
+function savePopup(evt) {
+  // отменить выполнение действия по-умолчанию
+    evt.preventDefault();
+    profileName.textContent =  profileNameInfo.value;
+    profileProfession.textContent = profileProfessionInfo.value;
+    closePopup(popupProfile);
+  }
+//Открывает попап редактирования профиля
+function openPopupProfile() {
+  //присвоить текущие ззачения имени и профессии
+  profileNameInfo.value = profileName.textContent;
+  profileProfessionInfo.value = profileProfession.textContent;
+  // проверить состояние кнопки
+  formListObj.formProfile.toggleButtonState();
+  // принудительно сбросить ошибки для формы
+  formListObj.formProfile.hideFormError();
+  openPopup(popupProfile);
+}
+
+
+
+// const popupCard = new PopupWithForm(
+//   {
+//     handleSubmitForm: (evt) => {
+//       evt.preventDefault();
+      
+//       const formValue = popupCard.getInputValues();
+//     },
+//   },
+//   cardPopup
+// );
+
+//Открывает попап добавления карт
+function openPopupAddCard() {
+  formListObj.formAddCard.toggleButtonState();
+  openPopup(popupAddCard);
+}
+//функция добавить карту и очистить форму
+function addCard(evt)  {
+  evt.preventDefault();
+  const item = {
+    name: newCardName.value,
+    link: newCardLink.value
+  };
+  // addObjCard(item);
+  const card = new Card(item, objCardList.templateSelector);
+  const cardElement = card.createCard();
+  cardsList.addItem(cardElement);
+  // cardsList.renderItems();
+  formAddCard.reset();
+  closePopup(popupAddCard);
+ }
 
 
 
