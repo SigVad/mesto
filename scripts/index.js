@@ -1,14 +1,16 @@
 // вгружаем классы
-import Section from "./components/Section.js";
+import Section from './components/Section.js';
 import Card from './components/Card.js';
 import FormValidator from './components/FormValidator.js';
-// import PopupWithForm from "./components/PopupWithForm.js";
+import PopupWithForm from './components/PopupWithForm.js';
+import PopupWithImage from "./components/PopupWithImage.js";
+import UserInfo from './components/UserInfo.js';
 // вгружаем используемые константы для классов
-import {objCardList, initialCards} from './utils/constCard.js';
-import {objValidationList} from './utils/constFormValidator.js';
+import {objCardList, initialCards} from './utils/constants.js';
+import {objValidationList} from './utils/constants.js';
 // вгружаем попапы
-import {popupProfile, formProfile, profileNameInfo, profileProfessionInfo} from './utils/constPopupProfile.js';
-import {popupAddCard, formAddCard, newCardName, newCardLink} from './utils/constPopupAddCard.js';
+import {popupProfile, formProfile, profileNameInfo, profileProfessionInfo} from './utils/constants.js';
+import {popupAddCard, formAddCard, newCardName, newCardLink} from './utils/constants.js';
 // вгружаем имя, профессию из главной страницы
 import {profileName, profileProfession, buttonProfile, buttonAddCard} from './utils/constants.js';
 // вгружаем список карточек, чтобы заполнить по шаблону
@@ -16,79 +18,116 @@ const cardsListSelector = '.elements__list';
 //создать массив форм
 const formList = Array.from(document.querySelectorAll(objValidationList.formSelector));
 //создать объект экземпляров класса валидации форм, чтобы обращаться к конкретному экземпляру
-const formListObj = {}; 
-//
 
-//Обойти массив, для каждой формы запустить валидацию
-formList.forEach((formElement) => {
-  const validator = new FormValidator(objValidationList, formElement);
-  formListObj[`${formElement.name}`] = validator;
-  validator.enableValidation();
-});
-
+//ОСНОВНОЕ ОКНО
+function createNewCard(item) {
+  // Добавим экземпляр класса открытия картинки
+  const popupWithImage = new PopupWithImage(item, '.popup_type_image');
+  // В карточку передаем данные, экземпляр и обработчик открытия картинки, селектор карты
+  const card = new Card(item, { popupWithImage,
+    handleCardClick: function handleCardClickFunction()  {
+      this._popupWithImage.open();
+    }
+   }, objCardList.templateSelector);
+  
+  const cardElement = card.createCard();
+  return cardElement;
+}
 //Section вставит в разметку список карточек 
 const cardsList = new Section({
   data: initialCards, //предзагрузка карт
   //Создание экземпляров карточек и их вставку в разметку передаем в конструктор класса Section, как функцию-колбэк
   renderer: (item) => { //значение item передается внутри класса при вызове
-    const card = new Card(item, objCardList.templateSelector);
-    const cardElement = card.createCard();
-    cardsList.addItem(cardElement);
+    cardsList.addItem(createNewCard(item));
     },
   }, cardsListSelector);
   
 cardsList.renderItems(); // отрисовка карточек
 
+//создать экземпляр данных профиля
+const userInfo = new UserInfo({ 
+  profileNameSelector: '.profile__name', 
+  profileJobSelector: '.profile__profession' 
+});
+
+// слушатели кнопок открытия попапов
+buttonProfile.addEventListener('click', openPopupProfile);
+buttonAddCard.addEventListener('click', openPopupAddCard);
 
 
+// ПОПАП ПРОФИЛЯ
+//запустить валидацию
+const profileFormValidator = new FormValidator(objValidationList, '.popup__form_profile');
+profileFormValidator.enableValidation();
 
-// const popupProfile = new PopupWithForm(
-//   {
-//     handleSubmitForm: (evt) => {
-//       evt.preventDefault();
-//       const user = popupProfile.getInputValues();
-//     },
-//   },
-//   profilePopup
-// );
+
+//создать попап
+const profilePopupWithForm = new PopupWithForm(
+  {
+    handleSubmitForm: (evt) => {
+      evt.preventDefault();
+    },
+  },
+  '.popup_type_edit'
+);
+
+
 
 // кнопка сохранения
 function savePopup(evt) {
   // отменить выполнение действия по-умолчанию
     evt.preventDefault();
-    profileName.textContent =  profileNameInfo.value;
-    profileProfession.textContent = profileProfessionInfo.value;
-    closePopup(popupProfile);
+    const data = {
+      name: profileNameInfo.value,
+      profession: profileProfessionInfo.value
+    };
+    userInfo.setUserInfo(data);
+    
+    profilePopupWithForm.close();
   }
+
+
+
 //Открывает попап редактирования профиля
 function openPopupProfile() {
   //присвоить текущие ззачения имени и профессии
-  profileNameInfo.value = profileName.textContent;
-  profileProfessionInfo.value = profileProfession.textContent;
-  // проверить состояние кнопки
-  formListObj.formProfile.toggleButtonState();
-  // принудительно сбросить ошибки для формы
-  formListObj.formProfile.hideFormError();
-  openPopup(popupProfile);
+  const data = userInfo.getUserInfo();
+  profileNameInfo.value = data.name;
+  profileProfessionInfo.value = data.profession;
+
+
+  // обновить состояние кнопки и сбросить ошибки для формы
+  profileFormValidator.toggleButtonState();
+  profileFormValidator.hideFormError();
+   profilePopupWithForm.open();
 }
+// слушатель сабмита
+formProfile.addEventListener('submit', savePopup);
 
 
 
-// const popupCard = new PopupWithForm(
-//   {
-//     handleSubmitForm: (evt) => {
-//       evt.preventDefault();
-      
-//       const formValue = popupCard.getInputValues();
-//     },
-//   },
-//   cardPopup
-// );
+
+// ПОПАП ДОБАВЛЕНИЯ КАРТЫ
+//запустить валидацию
+const AddCardFormValidator = new FormValidator(objValidationList, '.popup__form_add-card');
+AddCardFormValidator.enableValidation();
+//создать попап
+const addCardPopupWithForm = new PopupWithForm(
+  {
+    handleSubmitForm: (evt) => {
+      evt.preventDefault();
+      // const formValue = popupCardForm._getInputValues();
+    },
+  },
+  '.popup_type_card'
+);
 
 //Открывает попап добавления карт
 function openPopupAddCard() {
-  formListObj.formAddCard.toggleButtonState();
-  openPopup(popupAddCard);
+  // обновить статус кнопки и сбросить ошибки для формы
+  AddCardFormValidator.toggleButtonState();
+  AddCardFormValidator.hideFormError();
+  addCardPopupWithForm.open();
 }
 //функция добавить карту и очистить форму
 function addCard(evt)  {
@@ -98,19 +137,8 @@ function addCard(evt)  {
     link: newCardLink.value
   };
   // addObjCard(item);
-  const card = new Card(item, objCardList.templateSelector);
-  const cardElement = card.createCard();
-  cardsList.addItem(cardElement);
-  // cardsList.renderItems();
-  formAddCard.reset();
-  closePopup(popupAddCard);
+  cardsList.addItem(createNewCard(item));
+  addCardPopupWithForm.close();
  }
-
-
-
-// слушатели открывашки
-buttonProfile.addEventListener('click', openPopupProfile);
-buttonAddCard.addEventListener('click', openPopupAddCard);
-// слушатели форм заполнения профиля и добавления карты
-formProfile.addEventListener('submit', savePopup);
+// слушатель сабмита
 formAddCard.addEventListener('submit', addCard);
