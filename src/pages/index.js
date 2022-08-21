@@ -1,10 +1,12 @@
+// подключаем стили для сборки
+import "../pages/index.css";
 // вгружаем классы
-import Section from './components/Section.js';
-import Card from './components/Card.js';
-import FormValidator from './components/FormValidator.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import PopupWithImage from "./components/PopupWithImage.js";
-import UserInfo from './components/UserInfo.js';
+import Section from '../components/Section.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
 // вгружаем используемые константы для классов
 import {
   // кнопки главной страницы
@@ -35,7 +37,7 @@ import {
   newCardLink, // поле ввода ссылки
   // попап просмотр картинки
   objPopupImageInfo // Список селекторов попапа картинка
-} from './utils/constants.js';
+} from '../utils/constants.js';
 
 //ОСНОВНОЕ ОКНО
 function createNewCard(item) {
