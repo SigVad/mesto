@@ -1,5 +1,8 @@
 // подключаем стили для сборки
-import "../pages/index.css";
+import './index.css';
+// import '../images/header/logo.svg';
+// import '../images/profile/image.jpg';
+// import '../images/element/__trash-button/trash.svg';
 // вгружаем классы
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
