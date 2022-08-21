@@ -3,7 +3,6 @@ export default class UserInfo {
   //Принимает в конструктор объект с селекторами элемента имени пользователя и элемента информации о себе.
   constructor({ profileNameSelector, profileJobSelector}){
     this._profileNameElement = document.querySelector(profileNameSelector);
-    console.log(this._profileNameElement);
     this._profileJobElement = document.querySelector(profileJobSelector);
   }
     // Публичный метод принимает новые данные пользователя и добавляет их на страницу

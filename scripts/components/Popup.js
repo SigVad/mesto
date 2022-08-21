@@ -1,15 +1,18 @@
 export default class Popup {
-  constructor(popupSelector) {
+  constructor({ popupCloseButtonSelector, popupOpenedSelector}, popupSelector) {
+    this._popupSelector = popupSelector;
     this._popup = document.querySelector(popupSelector);
+    this._popupCloseButtonSelector = popupCloseButtonSelector;
+    this._popupOpenedSelector = popupOpenedSelector;
   }
   // Публичный метод открыть
   open() {
-    this._popup.classList.add('popup_opened');
+    this._popup.classList.add(this._popupOpenedSelector);
     this.setEventListeners();
   }
   // Публичный метод закрыть
   close() {
-    this._popup.classList.remove('popup_opened');
+    this._popup.classList.remove(this._popupOpenedSelector);
     this._removeEventListeners();
   }
   // Приватный метод закрыть по Esc
@@ -20,7 +23,8 @@ export default class Popup {
   }
   // Приватный метод закрыть по клику на Х и на фон
   _clickToExit = (evt) => {
-    if ((evt.target.classList.contains('popup'))||(evt.target.classList.contains('popup__close-button'))) {
+    if ((evt.target.classList.contains(this._popupSelector)) || 
+    (evt.target.classList.contains(this._popupCloseButtonSelector))) {
       this.close();
     }
   }

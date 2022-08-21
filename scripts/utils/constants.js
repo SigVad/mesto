@@ -1,10 +1,18 @@
+// кнопки главной страницы
 const profileElement = document.querySelector('.profile');
-export const profileName = profileElement.querySelector('.profile__name');
-export const profileProfession = profileElement.querySelector('.profile__profession');
-// извлекаем кнопки главной страницы
 export const buttonProfile = profileElement.querySelector('.profile__edit-button');
 export const buttonAddCard = profileElement.querySelector('.profile__add-button');
 
+// данные профиля
+export const objProfileInfo = {
+  profileNameSelector: '.profile__name', 
+  profileJobSelector: '.profile__profession' 
+}
+
+// карты на главной странице
+// контейнер для вставки карт (элементов разметки)
+export const cardsListSelector = '.elements__list';
+// Список селекторов элементов карты
 export const objCardList = {
   templateSelector: '#cards-template',
   cardClass: '.element',
@@ -14,7 +22,9 @@ export const objCardList = {
   likeButtonActiveClass: 'element__like-button_active',
   trashButtonClass: '.element__trash-button'
 };
-
+// селектор шаблона карты
+export const templateCardSelector = '#cards-template';
+// массив карт для предзагрузки
 export const initialCards = [
   {
     name: 'Архыз',
@@ -51,21 +61,36 @@ export const objValidationList = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 };
+// Список селекторов попапов
+export const objPopupList = {
+  popupCloseButtonSelector: 'popup__close-button',
+  popupOpenedSelector: 'popup_opened',
+  popupInputSelector: '.popup__input',
+  popupFormSelector: '.popup__form'
+}
 
-// переменные попап картинка
-export const popupImage = document.querySelector('.popup_type_image');
-export const imageSrc = popupImage.querySelector('.popup__image');
-export const imageCaption = popupImage.querySelector('.popup__image-caption');
-
-// переменные попап профиль
-export const popupProfile = document.querySelector('.popup_type_edit');
+// попап профиль
+export const popupProfileSelector = '.popup_type_edit';
+const popupProfile = document.querySelector(popupProfileSelector);
 // извлекаем форму, ввод имени, профессии
-export const formProfile = popupProfile.querySelector('.popup__form_profile');
+export const formProfileSelector = '.popup__form_profile';
+export const formProfile = popupProfile.querySelector(formProfileSelector);
 export const profileNameInfo = formProfile.querySelector('.popup__input_name');
 export const profileProfessionInfo = formProfile.querySelector('.popup__input_profession');
 
-// переменные попап добавить карту
-export const popupAddCard = document.querySelector('.popup_type_card');
-export const formAddCard = popupAddCard.querySelector('.popup__form_add-card');
+// попап добавить карту
+export const popupAddCardSelector = '.popup_type_card';
+const popupAddCard = document.querySelector(popupAddCardSelector);
+// извлекаем форму, поля ввода названия, ссылки
+export const formAddCardSelector = '.popup__form_add-card';
+export const formAddCard = popupAddCard.querySelector(formAddCardSelector);
 export const newCardName = formAddCard.querySelector('.popup__input_image-title');
 export const newCardLink = formAddCard.querySelector('.popup__input_image-link');
+
+// попап картинка
+// Список селекторов попапа картинка
+export const objPopupImageInfo = {
+  popupImageSelector:'.popup_type_image',
+  imageSelector: '.popup__image',
+  captionSelector: '.popup__image-caption'
+}

@@ -2,11 +2,18 @@ import Popup from "./Popup.js";
 
 // Для каждого попапа с формой
 export default class PopupWithForm extends Popup {
-  constructor({ handleSubmitForm }, popupSelector) {
-    super(popupSelector);
+  constructor({
+      popupCloseButtonSelector,
+      popupOpenedSelector,
+      popupInputSelector,
+      popupFormSelector
+      }, 
+      { handleSubmitForm }, 
+      popupSelector) {
+    super({ popupCloseButtonSelector, popupOpenedSelector }, popupSelector);
     this._handleSubmitForm = handleSubmitForm; //колбек обработчик
-    this._inputs = this._popup.querySelectorAll(".popup__input");
-    this._form = this._popup.querySelector(".popup__form");
+    this._inputs = this._popup.querySelectorAll(popupInputSelector);
+    this._form = this._popup.querySelector(popupFormSelector);
  }
   // Приватный метод собирает данные всех полей формы
   _getInputValues(){
