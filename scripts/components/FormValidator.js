@@ -1,5 +1,5 @@
 export default class FormValidator {
-  constructor(objValidationList, formElement) {
+  constructor(objValidationList, formElementSelector) {
     // принято на вход
     this._formSelector = objValidationList.formSelector;
     this._inputSelector = objValidationList.inputSelector;
@@ -7,7 +7,7 @@ export default class FormValidator {
     this._inactiveButtonClass = objValidationList.inactiveButtonClass;
     this._inputErrorClass = objValidationList.inputErrorClass;
     this._errorClass = objValidationList.errorClass;
-    this._formElement = formElement;
+    this._formElement = document.querySelector(formElementSelector);
     //Найдём все поля формы и сделаем из них массив
     this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     //Найдём кнопку отправки
