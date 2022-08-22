@@ -40,18 +40,21 @@ import {
 } from '../utils/constants.js';
 
 //ОСНОВНОЕ ОКНО
+// Добавим экземпляр класса открытия картинки
+// Передадим список селекторов попара, данные карты
+const popupWithImage = new PopupWithImage({
+  popupCloseButtonSelector: objPopupList.popupCloseButtonSelector,
+  popupOpenedSelector: objPopupList.popupOpenedSelector
+  },
+  objPopupImageInfo);
+
 function createNewCard(item) {
-  // Добавим экземпляр класса открытия картинки
-  // Передадим список селекторов попара, данные карты
-  const popupWithImage = new PopupWithImage({
-    popupCloseButtonSelector: objPopupList.popupCloseButtonSelector,
-    popupOpenedSelector: objPopupList.popupOpenedSelector
-    },
-    objPopupImageInfo, item);
+  
   // В карточку передаем селекторы элементов карты, уникальные данные, экземпляр и обработчик открытия картинки, селектор шаблона карты
   const card = new Card(objCardList, item, { popupWithImage,
     handleCardClick: function handleCardClickFunction()  {
-      this._popupWithImage.open();
+      // передадим данные карты в попап картинки
+      this._popupWithImage.open(item);
     }
    }, templateCardSelector);
   
