@@ -17,19 +17,25 @@ export default class FormValidator {
   enableValidation() {
     this._setEventListeners();
   }
+  // Публичный метод перезапуска валидации
+  resetValidation() {
+    // обновить состояние кнопки и сбросить ошибки для формы
+    this._toggleButtonState();
+    this._hideFormError();
+  }
   //метод добавляет полям формы обработчики событий и контролирует состояние кнопки отправки
   _setEventListeners() {
-    this.toggleButtonState();
+    this._toggleButtonState();
     // Обойдём все поля формы, каждому полю добавим слушатель с обработчиком события input 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidate(inputElement);
-        this.toggleButtonState();
+        this._toggleButtonState();
       });
     });
   }
-  //Публичный метод отрисовки кнопки Отправить принимает массив полей ввода и элемент кнопки
-  toggleButtonState() {
+  //метод отрисовки кнопки Отправить принимает массив полей ввода и элемент кнопки
+  _toggleButtonState() {
     // Если есть хотя бы один невалидный инпут, не активна
     if(this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._inactiveButtonClass);
@@ -71,8 +77,8 @@ export default class FormValidator {
     errorElement.classList.add(this._errorClass);
     errorElement.textContent = errorMessage;
   }
-  // Публичный метод принудительно сбрасывает ошибки для формы
-  hideFormError() {
+  // метод принудительно сбрасывает ошибки для формы
+  _hideFormError() {
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement)
     });
