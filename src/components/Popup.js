@@ -1,6 +1,5 @@
 export default class Popup {
   constructor({ popupCloseButtonSelector, popupOpenedSelector}, popupSelector) {
-    this._popupSelector = popupSelector;
     this._popup = document.querySelector(popupSelector);
     this._popupCloseButtonSelector = popupCloseButtonSelector;
     this._popupOpenedSelector = popupOpenedSelector;
@@ -23,7 +22,7 @@ export default class Popup {
   }
   // Приватный метод закрыть по клику на Х и на фон
   _clickToExit = (evt) => {
-    if ((evt.target.classList.contains(this._popupSelector)) || 
+    if ((evt.target.classList.contains(this._popupOpenedSelector)) || 
     (evt.target.classList.contains(this._popupCloseButtonSelector))) {
       this.close();
     }
