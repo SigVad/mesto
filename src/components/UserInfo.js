@@ -11,7 +11,6 @@ export default class UserInfo {
       this._profileJobElement.textContent = profession;
     }
   // Публичный метод возвращает объект с данными пользователя
-  //пригодится когда данные пользователя нужно будет подставить в форму при открытии.
   getUserInfo() {
     const data = {
       name: this._profileNameElement.textContent,

@@ -19,15 +19,11 @@ import {
   objValidationList, // Список селекторов для валидации
   objPopupList,   // Список селекторов попапов
   popupProfileSelector, // селектор попапа профиля
-  formProfileSelector, // селектор формы профиля
   formProfile, // форма попапа
   profileNameInfo, // поле ввода имени
   profileProfessionInfo, // поле ввода профессии
   popupAddCardSelector, // селектор попапа добавления карты
-  formAddCardSelector, // селектор формы профиля
   formAddCard, // форма попапа
-  newCardName, // поле ввода названия
-  newCardLink, // поле ввода ссылки
   objPopupImageInfo // Список селекторов попапа картинка
 } from '../utils/constants.js';
 
@@ -67,13 +63,6 @@ const userInfo = new UserInfo(objProfileInfo);
 buttonProfile.addEventListener('click', openPopupProfile);
 buttonAddCard.addEventListener('click', openPopupAddCard);
 
-
-
-
-
-
-
-
 // ПОПАП ПРОФИЛЯ
 //запустить валидацию
 const profileFormValidator = new FormValidator(objValidationList, formProfile);
@@ -104,11 +93,6 @@ const profilePopupWithForm = new PopupWithForm(
   popupProfileSelector
 );
 profilePopupWithForm.setEventListeners();
-
-
-
-
-
 
 // ПОПАП ДОБАВЛЕНИЯ КАРТЫ
 //запустить валидацию

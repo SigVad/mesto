@@ -73,8 +73,7 @@ export const objPopupList = {
 export const popupProfileSelector = '.popup_type_edit';
 const popupProfile = document.querySelector(popupProfileSelector);
 // извлекаем форму, ввод имени, профессии
-export const formProfileSelector = '.popup__form_profile';
-export const formProfile = popupProfile.querySelector(formProfileSelector);
+export const formProfile = popupProfile.querySelector('.popup__form_profile');
 export const profileNameInfo = formProfile.querySelector('.popup__input_name');
 export const profileProfessionInfo = formProfile.querySelector('.popup__input_profession');
 
@@ -82,10 +81,7 @@ export const profileProfessionInfo = formProfile.querySelector('.popup__input_pr
 export const popupAddCardSelector = '.popup_type_card';
 const popupAddCard = document.querySelector(popupAddCardSelector);
 // извлекаем форму, поля ввода названия, ссылки
-export const formAddCardSelector = '.popup__form_add-card';
-export const formAddCard = popupAddCard.querySelector(formAddCardSelector);
-export const newCardName = formAddCard.querySelector('.popup__input_image-title');
-export const newCardLink = formAddCard.querySelector('.popup__input_image-link');
+export const formAddCard = popupAddCard.querySelector('.popup__form_add-card');
 
 // попап картинка
 // Список селекторов попапа картинка

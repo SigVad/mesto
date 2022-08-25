@@ -26,9 +26,8 @@ export default class Card {
   // приватный метод делает разметку
   // забираем разметку из HTML и клонируем элемент
   _getTemplate() {
-    // в содержимом template-элемента найдёт элемент с классом card, клонирует его
     this._element = this._cardsTemplate.content
-                        .querySelector(this._cardClass).cloneNode(true);
+      .querySelector(this._cardClass).cloneNode(true);
   }
   //публичный метод добавления карты на страницу по шаблону (ссылка, название)
   createCard() {
