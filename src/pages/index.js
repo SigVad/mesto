@@ -96,9 +96,8 @@ const profilePopupWithForm = new PopupWithForm(
   {
    // кнопка сохранения &&&&&
     // handleSubmitForm: function handleSubmitFormFunction(evt) {
-    handleSubmitForm: () => {
-      const data = profilePopupWithForm._getInputValues();
-      userInfo.setUserInfo(data);
+    handleSubmitForm: (newUserData) => {
+      userInfo.setUserInfo(newUserData);
       profilePopupWithForm.close();
     },
   },
@@ -128,11 +127,10 @@ const addCardPopupWithForm = new PopupWithForm(
   {
      funcCreateNewCard: createNewCard,
     // сабмит добавит карту и очистит форму
-    handleSubmitForm: () => {
-      const data = addCardPopupWithForm._getInputValues();
+    handleSubmitForm: (newCardData) => {
       cardsList.addItem(createNewCard({
-        name: data.imageTitle,
-        link: data.imageLink
+        name: newCardData.imageTitle,
+        link: newCardData.imageLink
       }));
       addCardPopupWithForm.close();
     },
