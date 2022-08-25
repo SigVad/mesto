@@ -4,15 +4,16 @@ export default class Popup {
     this._popupCloseButtonSelector = popupCloseButtonSelector;
     this._popupOpenedSelector = popupOpenedSelector;
     this._popupSelector = popupSelector;
-    this._j = 0;
   }
   // Публичный метод открыть
   open() {
     this._popup.classList.add(this._popupOpenedSelector);
+    this._eventListenerToEscape();
   }
   // Публичный метод закрыть
   close() {
     this._popup.classList.remove(this._popupOpenedSelector);
+    this._removeEventListenerToEscape();
   }
   // Приватный метод закрыть по Esc
   _handleEscClose = (evt) => {
@@ -29,10 +30,12 @@ export default class Popup {
   }
   // метод добавить слушатели
   setEventListeners() {
-    this._j = this._j + 1;
-    console.log(`${this._j} слушатель clickToExit на ${this._popupSelector}`);
-    console.log(`${this._j} слушатель handleEscClose на ${this._popupSelector}`);
     this._popup.addEventListener('click', this._clickToExit);
+  }
+  _eventListenerToEscape() {
     document.addEventListener('keyup', this._handleEscClose); 
+  }
+  _removeEventListenerToEscape() {
+    document.removeEventListener('keyup', this._handleEscClose); 
   }
 }

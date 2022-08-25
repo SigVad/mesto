@@ -15,7 +15,6 @@ export default class PopupWithForm extends Popup {
     this._inputs = this._popup.querySelectorAll(popupInputSelector);
     this._form = this._popup.querySelector(popupFormSelector);
     this._popupSelector = popupSelector;
-    this._i = 0;
  }
   // Приватный метод собирает данные всех полей формы
   _getInputValues(){
@@ -26,17 +25,15 @@ export default class PopupWithForm extends Popup {
     return this._inputsValue;
   }
   // перезаписанный метод
+  
   setEventListeners(){
     //добавить обработчик сабмита формы
-    this._form.addEventListener("submit", this._handleSubmitForm.bind(this));
-    this._i = this._i + 1;
-    console.log(`${this._i} слушатель submit на ${this._popupSelector}`);
+    this._form.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      this._handleSubmitForm();
+    });
     super.setEventListeners();
   }
-  // _removeEventListeners() {
-  //   this._form.removeEventListener("submit", this._handleSubmitForm.bind(this));
-  //   super._removeEventListeners();
-  // }
   // Публичный перезаписанный метод
   close() {
     //сбросить форму

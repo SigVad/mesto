@@ -42,9 +42,9 @@ popupWithImage.setEventListeners();
 
 function createNewCard(item) {
   // В карточку передаем селекторы, уникальные данные, экземпляр и обработчик открытия картинки, селектор шаблона карты
-  const card = new Card(objCardList, item, { popupWithImage,
+  const card = new Card(objCardList, item, {
     handleCardClick: function handleCardClickFunction()  {
-      this._popupWithImage.open(item);
+      popupWithImage.open(item);
     }
    }, templateCardSelector);
   const cardElement = card.createCard();
@@ -96,17 +96,10 @@ const profilePopupWithForm = new PopupWithForm(
   {
    // кнопка сохранения &&&&&
     // handleSubmitForm: function handleSubmitFormFunction(evt) {
-    handleSubmitForm: (evt) => {
-      //     const data = {
-      //       name: profileNameInfo.value,
-      //       profession: profileProfessionInfo.value
-      //     };
-      evt.preventDefault();
+    handleSubmitForm: () => {
       const data = profilePopupWithForm._getInputValues();
-      console.log(data);
       userInfo.setUserInfo(data);
       profilePopupWithForm.close();
-      // console.log(data);
     },
   },
   popupProfileSelector
@@ -133,21 +126,15 @@ function openPopupAddCard() {
 const addCardPopupWithForm = new PopupWithForm(
   objPopupList,
   {
+     funcCreateNewCard: createNewCard,
     // сабмит добавит карту и очистит форму
-    handleSubmitForm: function handleSubmitFormFunction(evt) {
-      
-  // evt.preventDefault();
-  // const item = {
-  //   name: newCardName.value,
-  //   link: newCardLink.value
-  // };
-  // cardsList.addItem(createNewCard(item));
-  // addCardPopupWithForm.close();
-  
-      evt.preventDefault();
-      const data = this._getInputValues();
-      this._actionInSubmit.setUserInfo(data);
-      profilePopupWithForm.close();
+    handleSubmitForm: () => {
+      const data = addCardPopupWithForm._getInputValues();
+      cardsList.addItem(createNewCard({
+        name: data.imageTitle,
+        link: data.imageLink
+      }));
+      addCardPopupWithForm.close();
     },
   },
   popupAddCardSelector
