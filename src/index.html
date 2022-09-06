@@ -36,33 +36,33 @@
     </section>
 </main>
 
-  <!-- ниже подвал сайта-->
-  <footer class="footer">
-    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
-  </footer>
+<!-- ниже подвал сайта-->
+<footer class="footer">
+  <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+</footer>
 
-  <!-- ниже попап Редактировать профиль-->
-  <div class="popup popup_type_edit">
-    <div class="popup__container">
-      <button type="button" class="popup__close-button"></button>
-      <h2 class="popup__title">Редактировать профиль</h2>
-      <!-- ниже форма отправки данных -->
-      <form class="popup__form popup__form_profile" name="formProfile" novalidate>
-        <label class="popup__label">
-          <input type="text" class="popup__input popup__input_name"  id="input-profile-name"  placeholder="Имя:" name="name" required minlength="2" maxlength="40">
-          <span class="popup__error" id="input-profile-name-error"></span>
-        </label>
-        <label class="popup__label">
-          <input type="text" class="popup__input popup__input_profession" id="input-profile-profession" placeholder="О себе:" name="profession" required minlength="2" maxlength="200">
-          <span class="popup__error" id="input-profile-profession-error"></span>
-        </label>   
-        <button type="submit" class="popup__button">Сохранить</button>
-      </form>
-    </div>
+<!-- ниже попап Редактировать профиль-->
+<div class="popup popup_type_edit">
+  <div class="popup__container">
+    <button type="button" class="popup__close-button"></button>
+    <h2 class="popup__title">Редактировать профиль</h2>
+    <!-- ниже форма отправки данных -->
+    <form class="popup__form popup__form_profile" name="formProfile" novalidate>
+      <label class="popup__label">
+        <input type="text" class="popup__input popup__input_name"  id="input-profile-name"  placeholder="Имя:" name="name" required minlength="2" maxlength="40">
+        <span class="popup__error" id="input-profile-name-error"></span>
+      </label>
+      <label class="popup__label">
+        <input type="text" class="popup__input popup__input_profession" id="input-profile-profession" placeholder="О себе:" name="profession" required minlength="2" maxlength="200">
+        <span class="popup__error" id="input-profile-profession-error"></span>
+      </label>   
+      <button type="submit" class="popup__button">Сохранить</button>
+    </form>
   </div>
+</div>
 
- <!-- ниже попап Новое место-->
- <div class="popup popup_type_card">
+<!-- ниже попап Новое место-->
+<div class="popup popup_type_card">
   <div class="popup__container">
     <button type="button" class="popup__close-button"></button>
     <h2 class="popup__title">Новое место</h2>
@@ -76,7 +76,7 @@
         <input type="url" class="popup__input popup__input_image-link" id="imageLink" placeholder="Ссылка на картинку" name="imageLink" required>
         <span class="popup__error" id="imageLink-error"></span>
       </label>   
-      <button type="submit" class="popup__button">Добавить</button>
+      <button type="submit" class="popup__button">Создать</button>
     </form>
   </div>
 </div>
@@ -92,21 +92,49 @@
   </div>
 </div>
 
-  <!-- ниже форма подстановки карточек -->
-  <template id="cards-template">
-    <li class="element">
-      <img class="element__image" alt="">
-      <button type="button" class="element__trash-button">
-        <img class="element__trash-button_image" width="18px" height="19px" src="<%=require('./images/element/__trash-button/trash.svg')%>" alt="">
-      </button>
-      <div class="element__content">
-         <h2 class="element__title"></h2>
-         <button type="button" class="element__like-button"></button>
-      </div>
-    </li> 
-  </template> 
-  
-  <!-- ниже скрипты -->
-  <!-- <script type="module" src="./pages/index.js"></script> -->
+<!-- ниже попап Подтверждение удаления -->
+<div class="popup popup_type_confirm">
+  <div class="popup__container">
+    <button type="button" class="popup__close-button"></button>
+    <h2 class="popup__title">Вы уверены?</h2>
+    <!-- ниже форма отправки данных -->
+    <form class="popup__form popup__form_confirm" name="formConfirm" novalidate>
+      <button type="submit" class="popup__button">Да</button>
+    </form>
+  </div>
+</div>
+
+<!-- ниже попап Обновить аватар -->
+<div class="popup popup_type_avatar">
+  <div class="popup__container">
+    <button type="button" class="popup__close-button"></button>
+    <h2 class="popup__title">Обновить аватар</h2>
+    <!-- ниже форма отправки данных -->
+    <form class="popup__form popup__form_avatar" name="formAvatar" novalidate>
+      <label class="popup__label">
+        <input type="url" class="popup__input popup__input_avatar-link" id="avatarLink" placeholder="Ссылка на картинку" name="avatarLink" required>
+        <span class="popup__error" id="avatarLink-error"></span>
+      </label>   
+      <button type="submit" class="popup__button">Сохранить</button>
+    </form>
+  </div>
+</div>
+
+<!-- ниже форма подстановки карточек -->
+<template id="cards-template">
+  <li class="element">
+    <img class="element__image" alt="">
+    <button type="button" class="element__trash-button">
+      <img class="element__trash-button_image" width="18px" height="19px" src="<%=require('./images/element/__trash-button/trash.svg')%>" alt="">
+    </button>
+    <div class="element__content">
+      <h2 class="element__title"></h2>
+      <button type="button" class="element__like-button"></button>
+    </div>
+  </li> 
+</template> 
+
+<!-- ниже скрипты -->
+<!-- <script type="module" src="./pages/index.js"></script> -->
 </body>
 </html>
