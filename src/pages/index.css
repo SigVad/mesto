@@ -8,19 +8,23 @@
 @import url(../blocks/header/__logo/header__logo.css);
 /* profile */
 @import url(../blocks/profile/profile.css);
-@import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__name-button/profile__name-button.css);
 @import url(../blocks/profile/__profession/profile__profession.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__edit-button/profile__edit-button.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__avatar-edit/profile__avatar-edit.css);
+@import url(../blocks/profile/__avatar-image/profile__avatar-image.css);
 /* elements */
 @import url(../blocks/elements/__list/elements__list.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/element/__content/element__content.css);
 @import url(../blocks/element/__title/element__title.css);
+@import url(../blocks/element/__like/element__like.css);
+@import url(../blocks/element/__like-number/element__like-number.css);
 @import url(../blocks/element/__like-button/element__like-button.css);
 @import url(../blocks/element/__trash-button/element__trash-button.css);
 @import url(../blocks/element/__like-button/_active/element__like-button_active.css);
@@ -34,12 +38,12 @@
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/popup/__form/popup__form.css);
-@import url(../blocks/popup/__form/_confirm/popup__form_confirm.css);
 @import url(../blocks/popup/__container/_image/popup__container_image.css);
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__image-group/popup__image-group.css);
 @import url(../blocks/popup/__image-caption/popup__image-caption.css);
 @import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__title/_confirm/popup__title_confirm.css);
 @import url(../blocks/popup/__label/popup__label.css);
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__button/popup__button.css);
