@@ -1,5 +1,7 @@
 export default class Card {
   constructor(
+    //колбек удаления карты вызывает подтверждение
+    { handleTrashClick },
       // селекторы элементов карты
       { cardClass, imageClass, titleClass, likeButtonClass, trashButtonClass, likeButtonActiveClass }, 
       // уникальные данные карты
@@ -8,6 +10,9 @@ export default class Card {
       { handleCardClick }, 
       // селектор шаблона карты
       templateSelector) {
+    //колбеки
+    this._handleTrashClick = handleTrashClick;
+    this._handleCardClick = handleCardClick;
     // селекторы элементов карты
     this._cardClass = cardClass;
     this._imageClass = imageClass;
@@ -18,8 +23,6 @@ export default class Card {
     // уникальные данные карты
     this._link = link;
     this._name = name;
-    // обработчик открытия картинки
-    this._handleCardClick = handleCardClick;
     // шаблон карты
     this._cardsTemplate =  document.querySelector(templateSelector);
   }
@@ -52,10 +55,7 @@ export default class Card {
   _handleLikeClick() {
     this._likeButtonElement.classList.toggle(this._likeButtonActiveClass);
   }
-  _handleTrashClick() {
-    //убрать разметку
-    this._element.remove();
-    //занулить текущий объект
-    this._element = null; 
+  trashCard() {
+    this._element.closest(".element").remove();
   }
 }

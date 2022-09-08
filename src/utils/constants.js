@@ -101,6 +101,7 @@ export const formAvatar = popupAvatar.querySelector('.popup__form_avatar');
 
 
 // попап подтверждение
-export const popupConfirmation = document.querySelector(".popup_type_confirmation");
+export const popupConfirmationSelector = '.popup_type_confirmation';
+export const popupConfirmation = document.querySelector(popupConfirmationSelector);
 // кнопка попапа подтверждение
 export const buttonConfirmation = popupConfirmation.querySelector('.popup__button');

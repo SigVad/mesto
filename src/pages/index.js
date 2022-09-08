@@ -30,7 +30,7 @@ import {
   objPopupImageInfo, // Список селекторов попапа картинка
   formAvatar, // форма попапа
   popupAvatarSelector, // селектор попапа аватар
-  popupConfirmation, // селектор попапа подтверждение
+  popupConfirmationSelector, // селектор попапа подтверждение
   buttonConfirmation // кнопка попапа подтверждение
 } from '../utils/constants.js';
 
@@ -49,26 +49,26 @@ const api = new Api({
 api.getUserInfo();
 
 
-const deleteCardConfirm = new PopupWithConfirmation(
-  objPopupList,
-  {  handleSubmitForm: (cardId, cardEl) => {
-      deleteCardConfirm.loader(true);
-      api
-        .deleteCard(cardId)
-        .then(() => {
-          cardEl.deleteCard();
-          deleteCardConfirm.close();
-        })
-        .catch((err) => {
-          console.log(err); // выведем ошибку в консоль
-        })
-        .finally(() => {
-          deleteCardConfirm.loader(false);
-        });
-  } },
-  { buttonConfirmation: buttonConfirmation, 
-    popupConfirmation: popupConfirmation }
-);
+// const deleteCardConfirm = new PopupWithConfirmation(
+//   objPopupList,
+//   {  handleSubmitForm: (cardId, cardEl) => {
+//       deleteCardConfirm.loader(true);
+//       api
+//         .deleteCard(cardId)
+//         .then(() => {
+//           cardEl.deleteCard();
+//           deleteCardConfirm.close();
+//         })
+//         .catch((err) => {
+//           console.log(err); // выведем ошибку в консоль
+//         })
+//         .finally(() => {
+//           deleteCardConfirm.loader(false);
+//         });
+//   } },
+//   { buttonConfirmation: buttonConfirmation, 
+//     popupConfirmation: popupConfirmation }
+// );
 
 
 // Передадим список селекторов попара, данные карты
@@ -79,10 +79,30 @@ const popupWithImage = new PopupWithImage(
   // },
   objPopupList, objPopupImageInfo);
 popupWithImage.setEventListeners();
+console.log(popupConfirmationSelector);
+console.log(buttonConfirmation);
+//создадим попап подтверждения
+const popupWithConfirmation = new PopupWithConfirmation(
+  objPopupList,
+    {
+      handleSubmitForm: function handleSubmitFormFunction() {
+        // userInfo.setUserInfo(cardId, cardElement);
+    console.log(this._cardElement);
+        this._cardElement.trashCard();
+        popupWithConfirmation.close();
+      }
+    },
+    buttonConfirmation, popupConfirmationSelector
+);
+popupWithConfirmation.setEventListeners();
 
 function createNewCard(item) {
   // В карточку передаем селекторы, уникальные данные, экземпляр и обработчик открытия картинки, селектор шаблона карты
-  const card = new Card(objCardList, item, {
+  const card = new Card({
+    handleTrashClick: function  ()  {
+      popupWithConfirmation.open(this._element);}
+  },
+    objCardList, item, {
     handleCardClick: function handleCardClickFunction()  {
       popupWithImage.open(item);
     }
