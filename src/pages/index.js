@@ -185,7 +185,7 @@ const avatarPopupWithForm = new PopupWithForm(
      funcCreateNewCard: createNewCard,
     // сабмит добавит карту и очистит форму
     handleSubmitForm: (linkData) => {
-      // userInfo.setUserInfo(newUserData);
+      userInfo.setUserAvatar(linkData);
 
       // cardsList.addItem(createNewCard({
       //   name: '',

@@ -20,7 +20,7 @@ export default class UserInfo {
     return userInfo;
   }
   // Публичный метод меняет аватар
-  setUserAvatar(avatarLink) {
+  setUserAvatar({avatarLink}) {
     this._profileAvatarElement.src = avatarLink;
   }
   // Публичный метод 
