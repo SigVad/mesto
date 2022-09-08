@@ -66,6 +66,7 @@ export const objValidationList = {
 // Список селекторов попапов
 export const objPopupList = {
   popupCloseButtonSelector: 'popup__close-button',
+  popupSubmitSelector: 'popup__button',
   popupOpenedSelector: 'popup_opened',
   popupInputSelector: '.popup__input',
   popupFormSelector: '.popup__form'
