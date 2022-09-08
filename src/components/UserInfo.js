@@ -7,27 +7,30 @@ export default class UserInfo {
     this._profileAvatarElement = document.querySelector(profileAvatarSelector);
   }
     // Публичный метод принимает новые данные пользователя и добавляет их на страницу
-  setUserInfo({ name, profession }) {
-      this._profileNameElement.textContent = name;
-      this._profileJobElement.textContent = profession;
-    }
+  setUserInfo({ name, about }) {
+    // this._userId = _id;
+    //this._profileAvatarElement.src = `https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg`;
+    this._profileNameElement.textContent = name;
+    this._profileJobElement.textContent = about;
+  }
+  // Публичный метод меняет аватар
+  setUserAvatar(avatar) {
+    this._profileAvatarElement.src = avatar;
+  }
+
+  setUserId(_id) {
+    this._userId = _id;
+  }
+  getUserId() {
+    return this._userId;
+  }
+
   // Публичный метод возвращает объект с данными пользователя
   getUserInfo() {
     const userInfo = {
       name: this._profileNameElement.textContent,
-      profession: this._profileJobElement.textContent
+      about: this._profileJobElement.textContent
     };
     return userInfo;
-  }
-  // Публичный метод меняет аватар
-  setUserAvatar({avatarLink}) {
-    this._profileAvatarElement.src = avatarLink;
-  }
-  // Публичный метод 
-  setUserId(userId) {
-    this._userId = userId;
-  }
-  getUserId() {
-    return this._userId;
   }
 }

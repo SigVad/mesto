@@ -45,31 +45,29 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
+const userId = '';
+//создать экземпляр данных профиля
+const userInfo = new UserInfo(objProfileInfo);
+//[взять пользователя, взять карты]
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([user, cardItems]) => {
+    userInfo.setUserId(user._id); //запомнить ИД
+    userInfo.setUserInfo(user); //установить имя и описание
+    userInfo.setUserAvatar(user.avatar); //установить аватар
+    const userId = userInfo.getUserId();
+    cardsList.renderItems(cardItems, userId); //отрисовать карты
 
-api.getUserInfo();
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 
-
-// const deleteCardConfirm = new PopupWithConfirmation(
-//   objPopupList,
-//   {  handleSubmitForm: (cardId, cardEl) => {
-//       deleteCardConfirm.loader(true);
-//       api
-//         .deleteCard(cardId)
-//         .then(() => {
-//           cardEl.deleteCard();
-//           deleteCardConfirm.close();
-//         })
-//         .catch((err) => {
-//           console.log(err); // выведем ошибку в консоль
-//         })
-//         .finally(() => {
-//           deleteCardConfirm.loader(false);
-//         });
-//   } },
-//   { buttonConfirmation: buttonConfirmation, 
-//     popupConfirmation: popupConfirmation }
-// );
-
+  //Section вставит в разметку список карточек 
+  const cardsList = new Section({
+    renderer: (item) => {
+      cardsList.addItem(createNewCard(item));
+      },
+    }, cardsListSelector);
 
 // Передадим список селекторов попара, данные карты
 const popupWithImage = new PopupWithImage(
@@ -79,15 +77,12 @@ const popupWithImage = new PopupWithImage(
   // },
   objPopupList, objPopupImageInfo);
 popupWithImage.setEventListeners();
-console.log(popupConfirmationSelector);
-console.log(buttonConfirmation);
 //создадим попап подтверждения
 const popupWithConfirmation = new PopupWithConfirmation(
   objPopupList,
     {
       handleSubmitForm: function handleSubmitFormFunction() {
         // userInfo.setUserInfo(cardId, cardElement);
-    console.log(this._cardElement);
         this._cardElement.trashCard();
         popupWithConfirmation.close();
       }
@@ -97,6 +92,8 @@ const popupWithConfirmation = new PopupWithConfirmation(
 popupWithConfirmation.setEventListeners();
 
 function createNewCard(item) {
+
+
   // В карточку передаем селекторы, уникальные данные, экземпляр и обработчик открытия картинки, селектор шаблона карты
   const card = new Card({
     handleTrashClick: function  ()  {
@@ -110,18 +107,7 @@ function createNewCard(item) {
   const cardElement = card.createCard();
   return cardElement;
 }
-//Section вставит в разметку список карточек 
-const cardsList = new Section({
-  data: initialCards, //предзагрузка карт
-  //Создание экземпляров карточек и их вставку в разметку передаем в конструктор класса Section, как функцию-колбэк
-  renderer: (item) => { //значение item передается внутри класса при вызове
-    cardsList.addItem(createNewCard(item));
-    },
-  }, cardsListSelector);
-cardsList.renderItems(); // отрисовка карточек
 
-//создать экземпляр данных профиля
-const userInfo = new UserInfo(objProfileInfo);
 
 // слушатели кнопок открытия попапов
 buttonProfile.addEventListener('click', openPopupProfile);
@@ -198,22 +184,29 @@ function openPopupAvatar() {
   avatarPopupWithForm.open();
 }
 
+console.log(popupAvatarSelector);
 //создать попап
 const avatarPopupWithForm = new PopupWithForm(
   objPopupList,
   {
-     funcCreateNewCard: createNewCard,
-    // сабмит добавит карту и очистит форму
-    handleSubmitForm: (linkData) => {
-      userInfo.setUserAvatar(linkData);
+    handleSubmitForm: (evt) => {
+      evt.preventDefault();
+      avatarPopupWithForm.loader(true);
+      const ava = avatarForm.getInputValues().avatar;
+      return api
+        .changeAvatar(ava)
+        .then((data) => {
+          userData.setUserAva(data.avatar);
 
-      // cardsList.addItem(createNewCard({
-      //   name: '',
-      //   link: linkData.imageLink
-      // }));
-      avatarPopupWithForm.close();
+          avatarForm.close();
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        })
+        .finally(() => {
+          avatarForm.loader(false);
+      });
     },
-  },
-  popupAvatarSelector
-);
+    popupAvatarSelector
+  },);
 avatarPopupWithForm.setEventListeners();

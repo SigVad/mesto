@@ -1,6 +1,7 @@
 export default class Popup {
-  constructor({ popupCloseButtonSelector, popupOpenedSelector}, popupSelector) {
+  constructor({ popupCloseButtonSelector, popupSubmitSelector, popupOpenedSelector}, popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._popupSubmitSelector = this._popup.querySelector(popupSubmitSelector);
     this._popupCloseButtonSelector = popupCloseButtonSelector;
     this._popupOpenedSelector = popupOpenedSelector;
     this._popupSelector = popupSelector;
@@ -12,9 +13,17 @@ export default class Popup {
   }
   // Публичный метод закрыть
   close() {
-    this._popup.classList.remove(this._popupOpenedSelector);
+    this._popup.classList.remove(this.  _popupOpenedSelector);
     this._removeEventListenerToEscape();
   }
+
+loader(isload) {
+  if (isload) {
+    this._popupSubmitSelector.textContent = "Сохранение...";
+  } else {
+    this._popupSubmitSelector.textContent = "Сохранить";
+  }
+}
   // Приватный метод закрыть по Esc
   _handleEscClose = (evt) => {
     if (evt.key === 'Escape'){
