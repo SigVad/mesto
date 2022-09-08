@@ -2,11 +2,13 @@
 const profileElement = document.querySelector('.profile');
 export const buttonProfile = profileElement.querySelector('.profile__edit-button');
 export const buttonAddCard = profileElement.querySelector('.profile__add-button');
+export const buttonAvatar = profileElement.querySelector('.profile__avatar-button');
 
 // данные профиля
 export const objProfileInfo = {
   profileNameSelector: '.profile__name', 
-  profileJobSelector: '.profile__profession' 
+  profileJobSelector: '.profile__profession',
+  profileAvatarSelector: '.profile__avatar-image'
 }
 
 // карты на главной странице
@@ -90,3 +92,15 @@ export const objPopupImageInfo = {
   imageSelector: '.popup__image',
   captionSelector: '.popup__image-caption'
 }
+
+// попап аватар
+export const popupAvatarSelector = '.popup_type_avatar';
+const popupAvatar = document.querySelector(popupAvatarSelector);
+// извлекаем форму, поля ввода названия, ссылки
+export const formAvatar = popupAvatar.querySelector('.popup__form_avatar');
+
+
+// попап подтверждение
+export const popupConfirmation = document.querySelector(".popup_type_confirmation");
+// кнопка попапа подтверждение
+export const buttonConfirmation = popupConfirmation.querySelector('.popup__button');
