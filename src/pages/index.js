@@ -130,10 +130,21 @@ imagePopup.setEventListeners();
 const popupWithConfirmation = new PopupWithConfirmation(
 objPopupList,
   {
-    handleSubmitForm: function handleSubmitFormFunction() {
-      // userInfo.setUserInfo(cardId, cardElement);
-      this._cardElement.trashCard();
-      popupWithConfirmation.close();
+    handleSubmitForm: function handleSubmitFormFunction() {  
+      popupWithConfirmation.loader(objPopupList.popupSubmitSelector, true);
+      api
+        .deleteCard(this._cardId)
+        .then(() => {
+          console.log(this._element);
+          this._element.trashCard();
+          popupWithConfirmation.close(); 
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        })
+        .finally(() => {
+          popupWithConfirmation.loader(objPopupList.popupSubmitSelector, false);
+        });
     }
   },
   buttonConfirmation, popupConfirmationSelector
@@ -173,9 +184,9 @@ function createNewCard(item) {
         }
       },
       handleTrashClick: function handleTrashClickFunction () {
-        if ( popupWithConfirmation.open() ) {
-          this._trashCard();
-        };
+        popupWithConfirmation.open(
+          this._cardId, this._element, card
+          );
       }
     },
     { userId: userInfo.getUserId() },
@@ -198,17 +209,18 @@ const addCardFormValidator = new FormValidator(objValidationList, formAddCard);
 addCardFormValidator.enableValidation();
 
 
-
+// https://uprostim.com/wp-content/uploads/2021/04/image039-45.jpg
 //создать попап
 const addCardPopup = new PopupWithForm(
   objPopupList,
   {
-    handleSubmitForm: (newCardData) => {
+    handleSubmitForm: function handleSubmitFormFunction() {
       addCardPopup.loader(objPopupList.popupSubmitSelector, true);
+      console.log(this._popupSelector);
       return api
-        .addCard(newCardData)
+        .addCard(this._getInputValues())
         .then((data) => {
-          renderCard(data);
+          cardsList.addItem(createNewCard(data));
           addCardPopup.close();
         })
         .catch((err) => {

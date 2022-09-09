@@ -9,7 +9,6 @@ export default class UserInfo {
   }
     // Публичный метод принимает новые данные пользователя и добавляет их на страницу
   setUserInfo({ name, about }) {
-    //this._profileAvatarElement.src = `https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg`;
     this._profileNameElement.textContent = name;
     this._profileJobElement.textContent = about;
   }

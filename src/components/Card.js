@@ -27,6 +27,7 @@ export default class Card {
     this._name = name;
     this._link = link;
     this._userId = userId;
+    this._ownerId = owner._id;
     this._createdAt = createdAt
     // шаблон карты
     this._cardsTemplateElement =  document.querySelector(templateSelector);
@@ -52,16 +53,16 @@ export default class Card {
     this._amountLike = this._element.querySelector(this._amountLikeClass);
     this._amountLike.textContent = this._likes.length;
     this._likeButtonElement = this._element.querySelector(this._likeButtonClass);
-  // отрисуем мой лайк, если он есть
 
+  // отрисуем мой лайк, если он есть
     if(this._likes.some(like => like._id == this._userId)){
       this._likeButtonElement.classList.add(this._likeButtonActiveClass);
     };
     // Добавим слушатели
     this._setEventListeners();
 
-    if (this.id == this._cardId) {
-      this._trashButton.hidden = false;
+    if (this._userId != this._ownerId) {
+      this._trashButtonElement.style.visibility = "hidden";
     };
     // Вернём элемент наружу
     return this._element;
@@ -73,7 +74,8 @@ export default class Card {
   }
 
   trashCard() {
-    this._element.closest(this._cardClass).remove();
+    this._element.remove();
+    // element = null; 
   }
 
 
@@ -88,8 +90,8 @@ export default class Card {
         // ( this._likeButtonElement, this._cardId )
         .bind(this)
       );
-    this._element.querySelector(this._trashButtonClass)
-      .addEventListener( 'click',
+      this._trashButtonElement = this._element.querySelector(this._trashButtonClass);
+      this._trashButtonElement.addEventListener( 'click',
         this._handleTrashClick
         // ( this._cardId )
         .bind(this)

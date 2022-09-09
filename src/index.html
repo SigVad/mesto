@@ -72,11 +72,11 @@
     <!-- ниже форма отправки данных -->
     <form class="popup__form popup__form_add-card" name="formAddCard" novalidate>
       <label class="popup__label">
-        <input type="text" class="popup__input popup__input_image-title"  id="imageTitle"  placeholder="Название" name="imageTitle" required minlength="2" maxlength="30">
+        <input type="text" class="popup__input popup__input_image-title"  id="imageTitle"  placeholder="Название" name="name" required minlength="2" maxlength="30">
         <span class="popup__error" id="imageTitle-error"></span>
       </label>
       <label class="popup__label">
-        <input type="url" class="popup__input popup__input_image-link" id="imageLink" placeholder="Ссылка на картинку" name="imageLink" required>
+        <input type="url" class="popup__input popup__input_image-link" id="imageLink" placeholder="Ссылка на картинку" name="link" required>
         <span class="popup__error" id="imageLink-error"></span>
       </label>   
       <button type="submit" class="popup__button">Создать</button>
@@ -124,7 +124,7 @@
 <template id="cards-template">
   <li class="element">
     <img class="element__image" alt="">
-    <button type="button" class="element__trash-button" hidden>
+    <button type="button" class="element__trash-button">
       <img class="element__trash-button_image" width="18px" height="19px" src="<%=require('./images/element/__trash-button/trash.svg')%>" alt="">
     </button>
     <div class="element__content">
