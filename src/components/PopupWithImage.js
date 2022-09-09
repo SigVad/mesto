@@ -7,12 +7,7 @@ export default class PopupWithImage extends Popup {
       popupImageSelector, imageSelector, captionSelector 
       }) {
     super({ popupCloseButtonSelector, popupOpenedSelector }, popupImageSelector);
-    // super._popup = document.querySelector(popupImageSelector);
-    // super._popupCloseButtonSelector = popupCloseButtonSelector;
-    // super._popupOpenedSelector = popupOpenedSelector;
-    // super._popupSelector = popupSelector;
-    
-    
+        
     this._imageSrc = this._popup.querySelector(imageSelector);
     this._imageCaption = this._popup.querySelector(captionSelector);
   }
