@@ -10,7 +10,6 @@ export default class PopupWithForm extends Popup {
       },
       { handleSubmitForm }, 
       popupSelector) {
-        console.log(popupSelector);
     super({ popupCloseButtonSelector, popupOpenedSelector }, popupSelector);
     this._handleSubmitForm = handleSubmitForm; //колбек обработчик
     this._inputs = this._popup.querySelectorAll(popupInputSelector);

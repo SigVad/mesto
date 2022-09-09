@@ -5,9 +5,9 @@ export default class Card {
       // селекторы элементов карты
       { cardClass, imageClass, titleClass, likeButtonClass, trashButtonClass, likeButtonActiveClass }, 
       // уникальные данные карты
-      { link, name }, 
+      { likes, _id, name, link,  owner}, 
       // экземпляр и обработчик открытия картинки
-      { handleCardClick }, 
+      { handleCardClick, handleLikeCard, handleTrashCard }, 
       // селектор шаблона карты
       templateSelector) {
     //колбеки
@@ -42,6 +42,18 @@ export default class Card {
     this._element.querySelector(this._titleClass).textContent = this._name;
     // Добавим слушатели
     this._setEventListeners();
+
+    this.likes.forEach((like) => {
+      if (like._id == this._userInf) {
+        this._likeButton.classList.add("element__like-button_active");
+      }
+    });
+
+
+
+
+
+
     // Вернём элемент наружу
     return this._element;
   }
@@ -52,10 +64,10 @@ export default class Card {
     this._element.querySelector(this._trashButtonClass).addEventListener('click', this._handleTrashClick.bind(this));
     this._cardImage.addEventListener('click', this._handleCardClick.bind(this));
   }
-  _handleLikeClick() {
-    this._likeButtonElement.classList.toggle(this._likeButtonActiveClass);
-  }
-  trashCard() {
-    this._element.closest(".element").remove();
-  }
+  // _handleLikeClick() {
+  //   this._likeButtonElement.classList.toggle(this._likeButtonActiveClass);
+  // }
+  // trashCard() {
+  //   this._element.closest(".element").remove();
+  // }
 }

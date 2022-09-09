@@ -62,51 +62,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err); // выведем ошибку в консоль
   });
 
-  //Section вставит в разметку список карточек 
-  const cardsList = new Section({
-    renderer: (item) => {
-      cardsList.addItem(createNewCard(item));
-      },
-    }, cardsListSelector);
-
-// Передадим список селекторов попара, данные карты
-const imagePopup = new PopupWithImage(
-  // {
-  // popupCloseButtonSelector: objPopupList.popupCloseButtonSelector,
-  // popupOpenedSelector: objPopupList.popupOpenedSelector
-  // },
-  objPopupList, objPopupImageInfo);
-  imagePopup.setEventListeners();
-//создадим попап подтверждения
-const popupWithConfirmation = new PopupWithConfirmation(
-  objPopupList,
-    {
-      handleSubmitForm: function handleSubmitFormFunction() {
-        // userInfo.setUserInfo(cardId, cardElement);
-        this._cardElement.trashCard();
-        popupWithConfirmation.close();
-      }
-    },
-    buttonConfirmation, popupConfirmationSelector
-);
-popupWithConfirmation.setEventListeners();
-
-function createNewCard(item) {
-
-
-  // В карточку передаем селекторы, уникальные данные, экземпляр и обработчик открытия картинки, селектор шаблона карты
-  const card = new Card({
-    handleTrashClick: function  ()  {
-      popupWithConfirmation.open(this._element);}
-  },
-    objCardList, item, {
-    handleCardClick: function handleCardClickFunction()  {
-      imagePopup.open(item);
-    }
-   }, templateCardSelector);
-  const cardElement = card.createCard();
-  return cardElement;
-}
+ 
 
 
 // слушатели кнопок открытия попапов
@@ -155,6 +111,55 @@ function openPopupProfile() {
 
 
 
+
+
+
+ //Section вставит в разметку список карточек 
+ const cardsList = new Section({
+  renderer: (item) => {
+    cardsList.addItem(createNewCard(item));
+    },
+  }, cardsListSelector);
+
+// Передадим список селекторов попара, данные карты
+const imagePopup = new PopupWithImage(
+objPopupList, objPopupImageInfo);
+imagePopup.setEventListeners();
+//создадим попап подтверждения
+const popupWithConfirmation = new PopupWithConfirmation(
+objPopupList,
+  {
+    handleSubmitForm: function handleSubmitFormFunction() {
+      // userInfo.setUserInfo(cardId, cardElement);
+      this._cardElement.trashCard();
+      popupWithConfirmation.close();
+    }
+  },
+  buttonConfirmation, popupConfirmationSelector
+);
+popupWithConfirmation.setEventListeners();
+
+function createNewCard(item) {
+// В карточку передаем селекторы, уникальные данные, экземпляр и обработчик открытия картинки, селектор шаблона карты
+const card = new Card({
+  handleTrashClick: function  ()  {
+    popupWithConfirmation.open(this._element);}
+},
+  objCardList, item, {
+  handleCardClick: function handleCardClickFunction()  {
+    imagePopup.open(item);
+  }
+ }, templateCardSelector);
+const cardElement = card.createCard();
+return cardElement;
+}
+
+
+
+
+
+
+
 // ПОПАП ДОБАВЛЕНИЯ КАРТЫ
 //запустить валидацию
 const addCardFormValidator = new FormValidator(objValidationList, formAddCard);
@@ -168,9 +173,8 @@ const addCardPopup = new PopupWithForm(
   {
     handleSubmitForm: (newCardData) => {
       addCardPopup.loader(objPopupList.popupSubmitSelector, true);
-      const formValue = popupCardForm.getInputValues();
       return api
-        .addCard(formValue)
+        .addCard(newCardData)
         .then((data) => {
           renderCard(data);
           addCardPopup.close();
