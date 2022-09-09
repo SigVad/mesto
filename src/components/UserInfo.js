@@ -5,6 +5,7 @@ export default class UserInfo {
     this._profileNameElement = document.querySelector(profileNameSelector);
     this._profileJobElement = document.querySelector(profileJobSelector);
     this._profileAvatarElement = document.querySelector(profileAvatarSelector);
+    this._userId = '';
   }
     // Публичный метод принимает новые данные пользователя и добавляет их на страницу
   setUserInfo({ name, about }) {

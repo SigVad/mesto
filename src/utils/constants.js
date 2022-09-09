@@ -22,7 +22,8 @@ export const objCardList = {
   titleClass: '.element__title',
   likeButtonClass: '.element__like-button',
   likeButtonActiveClass: 'element__like-button_active',
-  trashButtonClass: '.element__trash-button'
+  trashButtonClass: '.element__trash-button',
+  amountLikeClass: '.element__like-number'
 };
 // селектор шаблона карты
 export const templateCardSelector = '#cards-template';

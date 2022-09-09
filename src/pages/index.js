@@ -45,7 +45,6 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-const userId = '';
 //создать экземпляр данных профиля
 const userInfo = new UserInfo(objProfileInfo);
 //[взять пользователя, взять карты]
@@ -54,15 +53,15 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userInfo.setUserId(user._id); //запомнить ИД
     userInfo.setUserInfo(user); //установить имя и описание
     userInfo.setUserAvatar(user.avatar); //установить аватар
-    const userId = userInfo.getUserId();
-    cardsList.renderItems(cardItems, userId); //отрисовать карты
+ 
 
+    cardsList.renderItems(cardItems); //отрисовать карты
+    // const userId = userInfo.getUserId();
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   });
 
- 
 
 
 // слушатели кнопок открытия попапов
@@ -117,7 +116,9 @@ function openPopupProfile() {
  //Section вставит в разметку список карточек 
  const cardsList = new Section({
   renderer: (item) => {
-    cardsList.addItem(createNewCard(item));
+    cardsList.addItem(
+      createNewCard(item)
+      );
     },
   }, cardsListSelector);
 
@@ -141,17 +142,48 @@ popupWithConfirmation.setEventListeners();
 
 function createNewCard(item) {
 // В карточку передаем селекторы, уникальные данные, экземпляр и обработчик открытия картинки, селектор шаблона карты
-const card = new Card({
-  handleTrashClick: function  ()  {
-    popupWithConfirmation.open(this._element);}
-},
-  objCardList, item, {
-  handleCardClick: function handleCardClickFunction()  {
-    imagePopup.open(item);
-  }
- }, templateCardSelector);
-const cardElement = card.createCard();
-return cardElement;
+  const card = new Card(
+    objCardList, 
+    item,
+    {
+      handleImageClick: function handleImageClickFunction() {
+        imagePopup.open(item);
+      },
+      handleLikeClick: function handleLikeClickFunction() {
+        if ( this._likeButtonElement
+            .classList
+            .contains(this._likeButtonActiveClass) ) {
+          return api
+            .dislikeCard(this._cardId)
+            .then((data) => {
+              card.toggleLikeCard(data);
+            })
+            .catch((err) => {
+              console.log(err); // выведем ошибку в консоль
+            });
+        } else {
+          return api
+            .likeCard(this._cardId)
+            .then((data) => {
+              card.toggleLikeCard(data);
+            })
+            .catch((err) => {
+              console.log(err); // выведем ошибку в консоль
+            });
+        }
+      },
+      handleTrashClick: function handleTrashClickFunction () {
+        if ( popupWithConfirmation.open() ) {
+          this._trashCard();
+        };
+      }
+    },
+    { userId: userInfo.getUserId() },
+    templateCardSelector
+  );
+
+  const cardElement = card.createCard();
+  return cardElement;
 }
 
 

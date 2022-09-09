@@ -1,18 +1,18 @@
 export default class Card {
   constructor(
-    //колбек удаления карты вызывает подтверждение
-    { handleTrashClick },
       // селекторы элементов карты
-      { cardClass, imageClass, titleClass, likeButtonClass, trashButtonClass, likeButtonActiveClass }, 
+      { cardClass, imageClass, titleClass, likeButtonClass, trashButtonClass, likeButtonActiveClass, amountLikeClass }, 
       // уникальные данные карты
-      { likes, _id, name, link,  owner}, 
+      { likes, _id, name, link,  owner, createdAt }, 
       // экземпляр и обработчик открытия картинки
-      { handleCardClick, handleLikeCard, handleTrashCard }, 
+      { handleImageClick, handleLikeClick, handleTrashClick }, 
       // селектор шаблона карты
-      templateSelector) {
+      { userId },
+      templateSelector ) {
     //колбеки
+    this._handleImageClick = handleImageClick;
+    this._handleLikeClick = handleLikeClick;
     this._handleTrashClick = handleTrashClick;
-    this._handleCardClick = handleCardClick;
     // селекторы элементов карты
     this._cardClass = cardClass;
     this._imageClass = imageClass;
@@ -20,17 +20,26 @@ export default class Card {
     this._likeButtonClass = likeButtonClass;
     this._trashButtonClass = trashButtonClass;
     this._likeButtonActiveClass = likeButtonActiveClass; 
+    this._amountLikeClass = amountLikeClass;
     // уникальные данные карты
-    this._link = link;
+    this._likes = likes
+    this._cardId = _id
     this._name = name;
+    this._link = link;
+    this._userId = userId;
+    this._createdAt = createdAt
     // шаблон карты
-    this._cardsTemplate =  document.querySelector(templateSelector);
+    this._cardsTemplateElement =  document.querySelector(templateSelector);
+
+      
   }
   // приватный метод делает разметку
   // забираем разметку из HTML и клонируем элемент
   _getTemplate() {
-    this._element = this._cardsTemplate.content
-      .querySelector(this._cardClass).cloneNode(true);
+    this._element = this._cardsTemplateElement
+      .content
+      .querySelector(this._cardClass)
+      .cloneNode(true);
   }
   //публичный метод добавления карты на страницу по шаблону (ссылка, название)
   createCard() {
@@ -40,34 +49,50 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._element.querySelector(this._titleClass).textContent = this._name;
+    this._amountLike = this._element.querySelector(this._amountLikeClass);
+    this._amountLike.textContent = this._likes.length;
+    this._likeButtonElement = this._element.querySelector(this._likeButtonClass);
+  // отрисуем мой лайк, если он есть
+
+    if(this._likes.some(like => like._id == this._userId)){
+      this._likeButtonElement.classList.add(this._likeButtonActiveClass);
+    };
     // Добавим слушатели
     this._setEventListeners();
 
-    this.likes.forEach((like) => {
-      if (like._id == this._userInf) {
-        this._likeButton.classList.add("element__like-button_active");
-      }
-    });
-
-
-
-
-
-
+    if (this.id == this._cardId) {
+      this._trashButton.hidden = false;
+    };
     // Вернём элемент наружу
     return this._element;
   }
-  //метод добавления слушателей
-  _setEventListeners() {
-    this._likeButtonElement = this._element.querySelector(this._likeButtonClass);
-    this._likeButtonElement.addEventListener('click', this._handleLikeClick.bind(this));
-    this._element.querySelector(this._trashButtonClass).addEventListener('click', this._handleTrashClick.bind(this));
-    this._cardImage.addEventListener('click', this._handleCardClick.bind(this));
+
+  toggleLikeCard(data) {
+    this._amountLike.textContent = data.likes.length;
+    this._likeButtonElement.classList.toggle(this._likeButtonActiveClass);
   }
-  // _handleLikeClick() {
-  //   this._likeButtonElement.classList.toggle(this._likeButtonActiveClass);
-  // }
-  // trashCard() {
-  //   this._element.closest(".element").remove();
-  // }
+
+  trashCard() {
+    this._element.closest(this._cardClass).remove();
+  }
+
+
+  _setEventListeners() {
+    this._cardImage
+      .addEventListener( 'click',
+        this._handleImageClick.bind(this)
+      );
+    this._likeButtonElement
+      .addEventListener( 'click',
+        this._handleLikeClick
+        // ( this._likeButtonElement, this._cardId )
+        .bind(this)
+      );
+    this._element.querySelector(this._trashButtonClass)
+      .addEventListener( 'click',
+        this._handleTrashClick
+        // ( this._cardId )
+        .bind(this)
+      );
+  }
 }
