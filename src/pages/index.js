@@ -118,30 +118,42 @@ buttonAvatar.addEventListener('click', openPopupAvatar);
 //запустить валидацию
 const profileFormValidator = new FormValidator(objValidationList, formProfile);
 profileFormValidator.enableValidation();
+//создать попап
+const profilePopupWithForm = new PopupWithForm(
+  objPopupList,
+  {
+    handleSubmitForm: (newUserData) => {
+      profilePopupWithForm.loader(true);
+      return api
+        .changeUserInfo(newUserData)
+        .then(() => {
+          userInfo.setUserInfo(newUserData);;
+          profilePopupWithForm.close();
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        })
+        .finally(() => {
+          profilePopupWithForm.loader(false);
+        });
+    }
+  },
+  popupProfileSelector
+);
+profilePopupWithForm.setEventListeners();
 
 //Открывает попап редактирования профиля
 function openPopupProfile() {
   //присвоить текущие ззачения имени и профессии
   const data = userInfo.getUserInfo();
   profileNameInfo.value = data.name;
-  profileProfessionInfo.value = data.profession;
+  profileProfessionInfo.value = data.about;
   // обновить состояние кнопки и сбросить ошибки для формы
   profileFormValidator.resetValidation();
   profilePopupWithForm.open();
 }
 
-//создать попап
-const profilePopupWithForm = new PopupWithForm(
-  objPopupList,
-  {
-    handleSubmitForm: (newUserData) => {
-      userInfo.setUserInfo(newUserData);
-      profilePopupWithForm.close();
-    }
-  },
-  popupProfileSelector
-);
-profilePopupWithForm.setEventListeners();
+
 
 // ПОПАП ДОБАВЛЕНИЯ КАРТЫ
 //запустить валидацию
@@ -183,8 +195,6 @@ function openPopupAvatar() {
   console.log("avatarPopupWithForm");
   avatarPopupWithForm.open();
 }
-
-console.log(popupAvatarSelector);
 //создать попап
 const avatarPopupWithForm = new PopupWithForm(
   objPopupList,

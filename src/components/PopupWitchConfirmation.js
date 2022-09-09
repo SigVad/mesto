@@ -4,11 +4,11 @@ import Popup from "./Popup.js";
 //Ему можно назначить обработчик сабмита, чтобы установить id карточки.
 export default class PopupWithConfirmation extends Popup{
   constructor(
-      { popupCloseButtonSelector, popupOpenedSelector },
+      { popupCloseButtonSelector, popupSubmitSelector, popupOpenedSelector },
       { handleSubmitForm },
       buttonConfirmation, popupSelector
       ){
-    super({ popupCloseButtonSelector, popupOpenedSelector }, popupSelector);
+    super({ popupCloseButtonSelector, popupSubmitSelector, popupOpenedSelector }, popupSelector);
     this._handleSubmitForm = handleSubmitForm;
     this._buttonConfirmation = buttonConfirmation;
     // console.log(buttonConfirmation);
