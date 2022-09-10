@@ -78,8 +78,6 @@ export const popupProfileSelector = '.popup_type_edit';
 const popupProfile = document.querySelector(popupProfileSelector);
 // извлекаем форму, ввод имени, профессии
 export const formProfile = popupProfile.querySelector('.popup__form_profile');
-export const profileNameInfo = formProfile.querySelector('.popup__input_name');
-export const profileProfessionInfo = formProfile.querySelector('.popup__input_profession');
 
 // попап добавить карту
 export const popupAddCardSelector = '.popup_type_card';

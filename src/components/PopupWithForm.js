@@ -38,16 +38,11 @@ export default class PopupWithForm extends Popup {
     this._form.reset();
     super.close();
   }
-
-
-
-  // ВМЕСТО openPopupProfile
-  // Можно сделать метод  setInputValues в классе PopupWithForm, который будет вставлять данные в инпуты:
-  // setInputValues(data) {
-  //   this._inputList.forEach((input) => {
-  //     // тут вставляем в `value` инпута данные из объекта по атрибуту `name` этого инпута
-  //     input.value = data[input.name];
-  //   });
-  // }
-  // И не нужно будет искать эти инпуты в index.js и что-то вставлять в них при открытии профиля. 
+  // метод будет вставлять данные в инпуты:
+  setInputValues(data) {
+    this._inputs.forEach((input) => {
+      // тут вставляем в `value` инпута данные из объекта по атрибуту `name` этого инпута
+      input.value = data[input.name];
+    });
+  }
 }

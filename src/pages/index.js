@@ -23,8 +23,6 @@ import {
   objPopupList,   // Список селекторов попапов
   popupProfileSelector, // селектор попапа профиля
   formProfile, // форма попапа
-  profileNameInfo, // поле ввода имени
-  profileProfessionInfo, // поле ввода профессии
   popupAddCardSelector, // селектор попапа добавления карты
   formAddCard, // форма попапа
   objPopupImageInfo, // Список селекторов попапа картинка
@@ -95,8 +93,7 @@ profilePopup.setEventListeners();
 function openPopupProfile() {
   //присвоить текущие ззачения имени и профессии
   const data = userInfo.getUserInfo();
-  profileNameInfo.value = data.name;
-  profileProfessionInfo.value = data.about;
+  profilePopup.setInputValues(data);
   // обновить состояние кнопки и сбросить ошибки для формы
   profileFormValidator.resetValidation();
   profilePopup.open();
