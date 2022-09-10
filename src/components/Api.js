@@ -11,9 +11,8 @@ export default class Api {
       // console.log(`ОТВЕТ: ${res}`);
       return res.json();
     }
-  }
-  _errorAnswer= (err) => {//если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${err.status}`);
+    // console.log(`Ошибка ${res.status}`);
+    return Promise.reject(`Ошибка ${res.status}`);
   }
 
   getInitialCards() {//запроcить список карт
@@ -21,8 +20,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     })
-      .then(this._checkAnswer)
-      .catch(this._errorAnswer);
+      .then(this._checkAnswer);
   }
 
   getUserInfo() {//запроcить инф. пользователя
@@ -30,8 +28,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     })
-    .then(this._checkAnswer)
-    .catch(this._errorAnswer);
+    .then(this._checkAnswer);
   }
 
   changeAvatar(link) {//изменить аватар
@@ -43,8 +40,7 @@ export default class Api {
         avatar: link,
       }),
     })
-      .then(this._checkAnswer)
-      .catch(this._errorAnswer);
+      .then(this._checkAnswer);
   }
 
   changeUserInfo(user) {//изменить информацию пользователя
@@ -57,8 +53,7 @@ export default class Api {
         about: user.about,
       }),
     })
-      .then(this._checkAnswer)
-      .catch(this._errorAnswer);
+      .then(this._checkAnswer);
   }
 
   addCard(value) {//отправить новую карту
@@ -68,8 +63,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(value),
     })
-      .then(this._checkAnswer)
-      .catch(this._errorAnswer);
+      .then(this._checkAnswer);
   }
 
   likeCard(cardId) {//отправить лайк
@@ -78,8 +72,7 @@ export default class Api {
       method: "PUT",//заменить ресурс полностью
       headers: this._headers,
     })
-      .then(this._checkAnswer)
-      .catch(this._errorAnswer);
+      .then(this._checkAnswer);
   }
 
   dislikeCard(cardId) {//удаление лайка
@@ -88,8 +81,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers,
     })
-      .then(this._checkAnswer)
-      .catch(this._errorAnswer);
+      .then(this._checkAnswer);
   }
   
   deleteCard(cardId) {//удаление карты, исп в обработчике сабмита подтверждения
@@ -98,7 +90,6 @@ export default class Api {
       method: "DELETE",
       headers: this._headers,
     })
-      .then(this._checkAnswer)
-      .catch(this._errorAnswer);
+      .then(this._checkAnswer);
   }
 }
