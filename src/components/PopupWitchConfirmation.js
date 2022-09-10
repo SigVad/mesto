@@ -1,25 +1,27 @@
 import Popup from "./Popup.js";
 
 //попап Подтвердить удаление карты
-//Ему можно назначить обработчик сабмита, чтобы установить id карточки.
 export default class PopupWithConfirmation extends Popup{
   constructor(
-      { popupCloseButtonSelector, popupOpenedSelector },
+      { popupCloseButtonSelector, popupOpenedSelector,
+      popupFormSelector },
       { handleSubmitForm },
+      { loadText, defaultText },
       buttonConfirmation, popupSelector
       ){
-    super({ popupCloseButtonSelector, popupOpenedSelector }, popupSelector);
+    super(
+      { popupCloseButtonSelector, popupOpenedSelector },
+      { loadText, defaultText }, popupSelector );
     this._handleSubmitForm = handleSubmitForm;
     this._buttonConfirmation = buttonConfirmation;
+    this._form = this._popup.querySelector(popupFormSelector); 
   }
-  setEventListeners() {
-    this._buttonConfirmation.addEventListener('click', this._handleSubmitForm.bind(this));
+  setEventListeners(){
+    this._form.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      this._handleSubmitForm();
+    });
     super.setEventListeners();
-    super._eventListenerToEscape();
-  }
-  _removeEventListeners() {
-    this._buttonConfirmation.removeEventListener('click', this._handleSubmitForm.bind(this));
-    super._removeEventListeners();
   }
   open(cardId, cardElement, card) {
     this._cardId = cardId;

@@ -34,8 +34,6 @@ import {
   buttonConfirmation // кнопка попапа подтверждение
 } from '../utils/constants.js';
 
-
-
 //ОСНОВНОЕ ОКНО
 //создадим api и передадим ему юрл сервера и код авторизации
 const api = new Api({
@@ -53,18 +51,13 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userInfo.setUserId(user._id); //запомнить ИД
     userInfo.setUserInfo(user); //установить имя и описание
     userInfo.setUserAvatar(user.avatar); //установить аватар
- 
-
     cardsList.renderItems(cardItems); //отрисовать карты
-    // const userId = userInfo.getUserId();
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   });
 
-
-
-// слушатели кнопок открытия попапов
+  // слушатели кнопок открытия попапов
 buttonProfile.addEventListener('click', openPopupProfile);
 buttonAddCard.addEventListener('click', openPopupAddCard);
 buttonAvatar.addEventListener('click', openPopupAvatar);
@@ -77,7 +70,7 @@ profileFormValidator.enableValidation();
 const profilePopup = new PopupWithForm(
   objPopupList,
   {
-    handleSubmitForm: (newUserData) => {
+    handleSubmitForm: function handleSubmitFormFunction(newUserData) {
       profilePopup.loader(objPopupList.popupSubmitSelector, true);
       return api
         .changeUserInfo(newUserData)
@@ -93,6 +86,7 @@ const profilePopup = new PopupWithForm(
         });
     }
   },
+  { loadText: 'Сохранение...', defaultText: 'Сохранить' },
   popupProfileSelector
 );
 profilePopup.setEventListeners();
@@ -108,13 +102,8 @@ function openPopupProfile() {
   profilePopup.open();
 }
 
-
-
-
-
-
- //Section вставит в разметку список карточек 
- const cardsList = new Section({
+//Section вставит в разметку список карточек 
+const cardsList = new Section({
   renderer: (item) => {
     cardsList.addItem(
       createNewCard(item)
@@ -130,13 +119,12 @@ imagePopup.setEventListeners();
 const popupWithConfirmation = new PopupWithConfirmation(
 objPopupList,
   {
-    handleSubmitForm: function handleSubmitFormFunction() {  
+    handleSubmitForm: function handleSubmitFormFunction() { 
       popupWithConfirmation.loader(objPopupList.popupSubmitSelector, true);
-      api
+      return api
         .deleteCard(this._cardId)
         .then(() => {
-          console.log(this._element);
-          this._element.trashCard();
+          this._card.trashCard();
           popupWithConfirmation.close(); 
         })
         .catch((err) => {
@@ -147,12 +135,12 @@ objPopupList,
         });
     }
   },
+  { loadText: 'Удаление...', defaultText: 'Да' },
   buttonConfirmation, popupConfirmationSelector
 );
 popupWithConfirmation.setEventListeners();
 
 function createNewCard(item) {
-// В карточку передаем селекторы, уникальные данные, экземпляр и обработчик открытия картинки, селектор шаблона карты
   const card = new Card(
     objCardList, 
     item,
@@ -197,28 +185,19 @@ function createNewCard(item) {
   return cardElement;
 }
 
-
-
-
-
-
-
 // ПОПАП ДОБАВЛЕНИЯ КАРТЫ
 //запустить валидацию
 const addCardFormValidator = new FormValidator(objValidationList, formAddCard);
 addCardFormValidator.enableValidation();
 
-
-// https://uprostim.com/wp-content/uploads/2021/04/image039-45.jpg
 //создать попап
 const addCardPopup = new PopupWithForm(
   objPopupList,
   {
-    handleSubmitForm: function handleSubmitFormFunction() {
+    handleSubmitForm: function handleSubmitFormFunction(data) {
       addCardPopup.loader(objPopupList.popupSubmitSelector, true);
-      console.log(this._popupSelector);
       return api
-        .addCard(this._getInputValues())
+        .addCard(data)
         .then((data) => {
           cardsList.addItem(createNewCard(data));
           addCardPopup.close();
@@ -231,6 +210,7 @@ const addCardPopup = new PopupWithForm(
         });
       }
   },
+  { loadText: 'Создание...', defaultText: 'Создать' },
   popupAddCardSelector
 );
 addCardPopup.setEventListeners();
@@ -240,25 +220,21 @@ function openPopupAddCard() {
   addCardFormValidator.resetValidation();
   addCardPopup.open();
 }
+
 // ПОПАП ОБНОВИТЬ АВАТАР
 //запустить валидацию
 const avatarFormValidator = new FormValidator(objValidationList, formAvatar);
 avatarFormValidator.enableValidation();
 
-
-
 //создать попап
 const avatarPopup = new PopupWithForm(
   objPopupList,
   {
-    handleSubmitForm: (avatar) => {
-      console.log(avatar.avatarLink);
-      
+    handleSubmitForm: function handleSubmitFormFunction(avatar){
       avatarPopup.loader(objPopupList.popupSubmitSelector, true);
       return api
         .changeAvatar(avatar.avatarLink)
         .then((dataLink) => {
-
           userInfo.setUserAvatar(avatar.avatarLink);
           avatarPopup.close();
         })
@@ -269,6 +245,7 @@ const avatarPopup = new PopupWithForm(
           avatarPopup.loader(objPopupList.popupSubmitSelector, false);
         });
     },},
+    { loadText: 'Сохранение...', defaultText: 'Сохранить' },
     popupAvatarSelector
   );
 avatarPopup.setEventListeners();

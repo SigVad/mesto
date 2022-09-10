@@ -5,7 +5,6 @@ export default class UserInfo {
     this._profileNameElement = document.querySelector(profileNameSelector);
     this._profileJobElement = document.querySelector(profileJobSelector);
     this._profileAvatarElement = document.querySelector(profileAvatarSelector);
-    this._userId = '';
   }
     // Публичный метод принимает новые данные пользователя и добавляет их на страницу
   setUserInfo({ name, about }) {
@@ -16,14 +15,12 @@ export default class UserInfo {
   setUserAvatar(avatar) {
     this._profileAvatarElement.src = avatar;
   }
-
   setUserId(_id) {
     this._userId = _id;
   }
   getUserId() {
     return this._userId;
   }
-
   // Публичный метод возвращает объект с данными пользователя
   getUserInfo() {
     const userInfo = {

@@ -31,8 +31,6 @@ export default class Card {
     this._createdAt = createdAt
     // шаблон карты
     this._cardsTemplateElement =  document.querySelector(templateSelector);
-
-      
   }
   // приватный метод делает разметку
   // забираем разметку из HTML и клонируем элемент
@@ -75,9 +73,9 @@ export default class Card {
 
   trashCard() {
     this._element.remove();
-    // element = null; 
+    //занулить текущий объект
+    this._element = null; 
   }
-
 
   _setEventListeners() {
     this._cardImage
@@ -87,14 +85,11 @@ export default class Card {
     this._likeButtonElement
       .addEventListener( 'click',
         this._handleLikeClick
-        // ( this._likeButtonElement, this._cardId )
         .bind(this)
       );
       this._trashButtonElement = this._element.querySelector(this._trashButtonClass);
       this._trashButtonElement.addEventListener( 'click',
-        this._handleTrashClick
-        // ( this._cardId )
-        .bind(this)
+        this._handleTrashClick.bind(this)
       );
   }
 }
