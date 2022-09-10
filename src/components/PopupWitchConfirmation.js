@@ -23,10 +23,9 @@ export default class PopupWithConfirmation extends Popup{
     });
     super.setEventListeners();
   }
-  open(cardId, cardElement, card) {
-    this._cardId = cardId;
-    this._element = cardElement;
-    this._card = card;
+  open(cardId, card) {
+    this.cardId = cardId;
+    this.card = card;
     super.open();
   }
 }

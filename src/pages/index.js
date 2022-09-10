@@ -122,9 +122,9 @@ objPopupList,
     handleSubmitForm: function handleSubmitFormFunction() { 
       popupWithConfirmation.loader(objPopupList.popupSubmitSelector, true);
       return api
-        .deleteCard(this._cardId)
+        .deleteCard(this.cardId)
         .then(() => {
-          this._card.trashCard();
+          this.card.trashCard();
           popupWithConfirmation.close(); 
         })
         .catch((err) => {
@@ -149,11 +149,11 @@ function createNewCard(item) {
         imagePopup.open(item);
       },
       handleLikeClick: function handleLikeClickFunction() {
-        if ( this._likeButtonElement
+        if ( this.likeButtonElement
             .classList
-            .contains(this._likeButtonActiveClass) ) {
+            .contains(this.likeButtonActiveClass) ) {
           return api
-            .dislikeCard(this._cardId)
+            .dislikeCard(this.cardId)
             .then((data) => {
               card.toggleLikeCard(data);
             })
@@ -162,7 +162,7 @@ function createNewCard(item) {
             });
         } else {
           return api
-            .likeCard(this._cardId)
+            .likeCard(this.cardId)
             .then((data) => {
               card.toggleLikeCard(data);
             })
@@ -173,7 +173,7 @@ function createNewCard(item) {
       },
       handleTrashClick: function handleTrashClickFunction () {
         popupWithConfirmation.open(
-          this._cardId, this._element, card
+          this.cardId, card
           );
       }
     },

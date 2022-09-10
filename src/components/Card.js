@@ -19,11 +19,11 @@ export default class Card {
     this._titleClass = titleClass;
     this._likeButtonClass = likeButtonClass;
     this._trashButtonClass = trashButtonClass;
-    this._likeButtonActiveClass = likeButtonActiveClass; 
+    this.likeButtonActiveClass = likeButtonActiveClass; //используется в index.js
     this._amountLikeClass = amountLikeClass;
     // уникальные данные карты
-    this._likes = likes
-    this._cardId = _id
+    this._likes = likes;
+    this.cardId = _id; //используется в index.js
     this._name = name;
     this._link = link;
     this._userId = userId;
@@ -50,11 +50,12 @@ export default class Card {
     this._element.querySelector(this._titleClass).textContent = this._name;
     this._amountLike = this._element.querySelector(this._amountLikeClass);
     this._amountLike.textContent = this._likes.length;
-    this._likeButtonElement = this._element.querySelector(this._likeButtonClass);
+    //используется в index.js
+    this.likeButtonElement = this._element.querySelector(this._likeButtonClass);
 
-  // отрисуем мой лайк, если он есть
+    // отрисуем мой лайк, если он есть
     if(this._likes.some(like => like._id == this._userId)){
-      this._likeButtonElement.classList.add(this._likeButtonActiveClass);
+      this.likeButtonElement.classList.add(this.likeButtonActiveClass);
     };
     // Добавим слушатели
     this._setEventListeners();
@@ -68,7 +69,7 @@ export default class Card {
 
   toggleLikeCard(data) {
     this._amountLike.textContent = data.likes.length;
-    this._likeButtonElement.classList.toggle(this._likeButtonActiveClass);
+    this.likeButtonElement.classList.toggle(this.likeButtonActiveClass);
   }
 
   trashCard() {
@@ -82,7 +83,7 @@ export default class Card {
       .addEventListener( 'click',
         this._handleImageClick.bind(this)
       );
-    this._likeButtonElement
+    this.likeButtonElement
       .addEventListener( 'click',
         this._handleLikeClick
         .bind(this)
